@@ -11,5 +11,7 @@ Rails.application.routes.draw do
   namespace :employee do 
     get 'dashboard' => 'dashboard#index'
     get 'assignments' => 'dashboard#assignments'
+    get 'timesheets' => 'timesheets#index'
+    resources :tasks
   end
 end

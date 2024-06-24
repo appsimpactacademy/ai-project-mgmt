@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  time_in_hours: 1.5
+  employee: one
+  employee_project: one
+  status: MyString
+  log_date: 2024-06-24
+  task_type: MyString
+
+two:
+  description: MyString
+  time_in_hours: 1.5
+  employee: two
+  employee_project: two
+  status: MyString
+  log_date: 2024-06-24
+  task_type: MyString

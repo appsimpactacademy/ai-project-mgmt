@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_23_071556) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_24_141415) do
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.text "about"
@@ -84,8 +84,34 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_23_071556) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "number"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "time_logs", force: :cascade do |t|
+    t.string "description"
+    t.float "time_in_hours"
+    t.string "status"
+    t.date "log_date"
+    t.string "task_type"
+    t.integer "employee_id", null: false
+    t.integer "task_id", null: false
+    t.integer "employee_project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_time_logs_on_employee_id"
+    t.index ["employee_project_id"], name: "index_time_logs_on_employee_project_id"
+    t.index ["task_id"], name: "index_time_logs_on_task_id"
+  end
+
   add_foreign_key "employee_projects", "employees"
   add_foreign_key "employee_projects", "projects"
   add_foreign_key "employee_skills", "employees"
   add_foreign_key "employee_skills", "skills"
+  add_foreign_key "time_logs", "employee_projects"
+  add_foreign_key "time_logs", "employees"
+  add_foreign_key "time_logs", "tasks"
 end

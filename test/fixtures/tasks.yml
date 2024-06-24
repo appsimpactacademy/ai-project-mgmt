@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: MyString
+  title: MyString
+  description: MyString
+  time_in_hours: 1.5
+  employee: one
+  employee_project: one
+
+two:
+  number: MyString
+  title: MyString
+  description: MyString
+  time_in_hours: 1.5
+  employee: two
+  employee_project: two
