@@ -1,0 +1,71 @@
+<%= form_with(model: [:admin, @employee_project]) do |form| %>
+  <div class="modal-body">
+    <div class="row">
+      <% if @employee_project.errors.any? %>
+        <div class="error-area" style="color:red;">
+          <h3><%= pluralize(@employee_project.errors.count, 'error') %> prohibited your employee from being saved.</h3>
+          <ul>
+            <% @employee_project.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label class="mb-2 mt-3">
+            Employee
+            <span class="text-danger">*</span>
+          </label>
+          <%= form.select :employee_id, options_for_select(Employee.all.map{ |employee| [employee.full_name, employee.id] }, selected: form.object.employee_id), {prompt: 'Select Employee'}, { class: "form-select" } %>
+        </div>
+
+        <div class="form-group">
+          <label class="mb-2 mt-3">
+            Project
+            <span class="text-danger">*</span>
+          </label>
+          <%= form.select :project_id, options_for_select(Project.all.map{ |project| [project.title, project.id] }, selected: form.object.project_id), {prompt: 'Select Project'}, { class: "form-select" } %>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-lg-6">
+            <label class="mb-2 mt-3">
+              Role
+              <span class="text-danger">*</span>
+            </label>
+            <%= form.select :role, options_for_select(EmployeeProject::ROLE, selected: form.object.role), {prompt: 'Select role on project'}, { class: "form-select" } %>
+          </div>
+          <div class="col-lg-6">
+            <label class="mb-2 mt-3">
+              Current Status
+            </label>
+            <%= form.select :current_status, options_for_select(EmployeeProject::CURRENT_STATUS, selected: form.object.current_status), {prompt: 'Select current status on project'}, { class: "form-select" } %>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-lg-6">
+            <label class="mb-2 mt-3">
+              Start Date
+              <span class="text-danger">*</span>
+            </label>
+            <%= form.date_field :start_date, class: "form-control" %>
+          </div>
+          <div class="col-lg-6">
+            <label class="mb-2 mt-3">
+              End Date
+            </label>
+            <%= form.date_field :end_date, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <%= form.submit 'Save Changes', class: 'btn btn-primary', data: { action: 'click->bs-modal#submitEnd' } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  </div>
+<% end %>

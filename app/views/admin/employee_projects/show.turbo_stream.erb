@@ -1,0 +1,27 @@
+<%= turbo_stream.replace "remote_modal" do %>
+  <%= turbo_frame_tag :remote_modal, target: :_top do %>
+    <div class="modal fade" id="bsTurboModal" tabindex="-1" aria-labelledby="bsTurboModalLabel" aria-hidden="true" data-controller="bs-modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bsTurboModalLabel">Employee Assignment Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="lead"><strong>Project Title: </strong><%= @employee_project.project.title %></p>
+            <p class="lead"><strong>Employee Name: </strong><%= @employee_project.employee.full_name %></p>
+            <p class="lead"><strong>Role: </strong><%= @employee_project.role.titleize %></p>
+            <p class="lead"><strong>Current Status: </strong><%= @employee_project.current_status %></p>
+            <p class="lead"><strong>Start Date: </strong><%= @employee_project.start_date %></p>
+            <% if @employee_project.end_date.present? %>
+              <p class="lead"><strong>End Date: </strong><%= @employee_project.end_date %></p>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

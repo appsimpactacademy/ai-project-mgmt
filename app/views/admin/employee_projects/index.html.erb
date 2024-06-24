@@ -1,0 +1,16 @@
+<%= link_to "New Employee Assignment", new_admin_employee_project_path, class: "btn btn-primary mb-3", data: { controller: "bs-modal-form" } %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Employee</th>
+      <th>Project</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  <tbody id="employee-project-list">
+    <% @employee_projects.each do |employee_project| %>
+      <%= render "admin/employee_projects/employee_project", employee_project: employee_project %>
+    <% end %>
+  </tbody>
+</table>

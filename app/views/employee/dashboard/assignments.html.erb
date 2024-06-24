@@ -1,0 +1,15 @@
+<% if @employee_projects.present? %> 
+  <h1>My Projects</h1>
+  <div class="list-group">
+    <% @employee_projects.each do |ep| %>
+      <%= link_to '', class: 'list-group-item list-group-item-action' do %>
+        <p><%= ep.project.title %></p>
+        <small class="fw-bold">Assigned On: <%= ep.start_date %></small>
+        <% if ep.end_date.present? %>
+          <br>
+          <small class="fw-bold">Closed On: <%= ep.end_date %></small>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

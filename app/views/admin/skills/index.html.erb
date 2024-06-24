@@ -1,0 +1,15 @@
+<%= link_to "New Skill", new_admin_skill_path, class: "btn btn-primary mb-3", data: { controller: "bs-modal-form" } %>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+  <tbody id="skill-list">
+    <% @skills.each do |skill| %>
+      <%= render "admin/skills/skill", skill: skill %>
+    <% end %>
+  </tbody>
+</table>

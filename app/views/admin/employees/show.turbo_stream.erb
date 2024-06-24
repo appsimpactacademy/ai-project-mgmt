@@ -1,0 +1,24 @@
+<%= turbo_stream.replace "remote_modal" do %>
+  <%= turbo_frame_tag :remote_modal, target: :_top do %>
+    <div class="modal fade" id="bsTurboModal" tabindex="-1" aria-labelledby="bsTurboModalLabel" aria-hidden="true" data-controller="bs-modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bsTurboModalLabel">Employee Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="lead"><strong>Title: </strong><%= @employee.job_title %></p>
+            <p class="lead"><strong>Name: </strong><%= @employee.full_name %></p>
+            <p class="lead"><strong>Role: </strong><%= @employee.role.titleize %></p>
+            <p class="lead"><strong>Email: </strong><%= @employee.email %></p>
+            <p class="lead"><strong>Contact Number: </strong><%= @employee.contact_number %></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee: one
+  project: one
+  start_date: 2024-06-20
+  end_date: 2024-06-20
+  role: MyString
+  current_status: MyString
+
+two:
+  employee: two
+  project: two
+  start_date: 2024-06-20
+  end_date: 2024-06-20
+  role: MyString
+  current_status: MyString

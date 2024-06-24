@@ -1,0 +1,7 @@
+<tr id="skill-item-<%= skill.id %>">
+  <td><%= skill.name %></td>
+  <td>
+    <%= link_to 'Edit', edit_admin_skill_path(skill), class: 'btn btn-warning', data: { controller: "bs-modal-form" } %>
+    <%= link_to 'Delete', admin_skill_path(skill), class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this skill? This action can not be undo.' } %>
+  </td>
+</tr>
