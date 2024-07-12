@@ -12,6 +12,16 @@ Rails.application.routes.draw do
     get 'dashboard' => 'dashboard#index'
     get 'assignments' => 'dashboard#assignments'
     get 'timesheets' => 'timesheets#index'
-    resources :tasks
+    get 'log_time' => 'timesheets#log_time'
+    resources :tasks do
+      collection do 
+        get :fetch_project_tasks
+      end
+    end
+    resources :time_logs do 
+      collection do 
+        get :fetch_logged_dates
+      end
+    end
   end
 end

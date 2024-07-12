@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_24_141415) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_26_094111) do
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.text "about"
@@ -89,6 +89,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_24_141415) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "project_id", null: false
+    t.integer "employee_id", null: false
+    t.index ["employee_id"], name: "index_tasks_on_employee_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
   end
 
   create_table "time_logs", force: :cascade do |t|
@@ -111,6 +115,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_24_141415) do
   add_foreign_key "employee_projects", "projects"
   add_foreign_key "employee_skills", "employees"
   add_foreign_key "employee_skills", "skills"
+  add_foreign_key "tasks", "employees"
+  add_foreign_key "tasks", "projects"
   add_foreign_key "time_logs", "employee_projects"
   add_foreign_key "time_logs", "employees"
   add_foreign_key "time_logs", "tasks"

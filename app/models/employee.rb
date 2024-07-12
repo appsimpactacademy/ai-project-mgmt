@@ -11,6 +11,8 @@ class Employee < ApplicationRecord
   has_many :employee_projects
   has_many :projects, through: :employee_projects
   belongs_to :company
+  has_many :tasks
+  has_many :time_logs
 
   validates :first_name, :last_name, :job_title, presence: true
   validates :contact_number, presence: true, uniqueness: true 

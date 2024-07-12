@@ -4,7 +4,10 @@ class Admin::ProjectsController < AdminController
     @projects = current_company.projects.order(created_at: :desc)
   end
 
-  def show; end
+  def show
+    @employees = @project.employees
+    @tasks = @project.tasks
+  end
 
   def edit; end
 

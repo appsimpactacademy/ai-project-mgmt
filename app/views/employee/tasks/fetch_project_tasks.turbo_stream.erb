@@ -1,0 +1,20 @@
+<% if @tasks.present? %>
+  <%= turbo_stream.replace 'project-tasks-list' do %>
+    <div class="col-lg-12" id="project-tasks-list">
+      <label class="mb-2 mt-3">
+        Select Task
+        <span class="text-danger">*</span>
+      </label>
+      <select class="form-select" name="time_log[task_id]" id="time_log_task_id">
+        <% @tasks.each do |task| %>
+          <option value="<%= task.id %>"><%= task.display_title %></option>
+        <% end %>
+      </select>
+    </div>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace 'project-tasks-list' do %>
+    <div class="col-lg-12" id="project-tasks-list">
+    </div>
+  <% end %>
+<% end %>
