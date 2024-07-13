@@ -30,7 +30,7 @@
             Type
             <span class="text-danger">*</span>
           </label>
-          <%= form.select :task_type, options_for_select(TimeLog::TASK_TYPE, selected: form.object.task_type), {prompt: 'Task type'}, { class: "form-select" } %>
+          <%= form.select :task_type, options_for_select(TimeLog::TASK_TYPE, selected: form.object.task_type), {prompt: 'Task type'}, { class: "form-select", data: { controller: 'work-hours' } } %>
         </div>
 
         <div class="col-lg-6">
