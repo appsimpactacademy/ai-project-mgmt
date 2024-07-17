@@ -3,6 +3,7 @@ class EmployeeProject < ApplicationRecord
   CURRENT_STATUS = %w(Active Inactive)
   belongs_to :employee
   belongs_to :project
+  has_many :time_logs
 
   validates :role, :current_status, :start_date, presence: true
 end

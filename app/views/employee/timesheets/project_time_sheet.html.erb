@@ -1,0 +1,51 @@
+<% content_for :title, "AIProjectMgmt | Timesheet for #{@project.title}" %>
+<div class="row">
+  <h2 class="mb-3 mt-3"><%= @project.title %> Timesheet</h2>
+  <div class="col-lg-4">
+    <div class="card shadow">
+      <div class="card-body text-center">
+        <h2>Total Tasks</h2>
+        <h2 class="text-primary"><%= @total_number_of_tasks %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow">
+      <div class="card-body text-center">
+        <h2>Total Time Spent</h2>
+        <h2 class="text-primary"><%= @total_time_spent %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow">
+      <div class="card-body text-center">
+        <h2>Total Work Days</h2>
+        <h2 class="text-primary"><%= @total_working_days %></h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 mt-4">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Hours</th>
+          <th>Task</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_time_logs.each do |time_log| %>
+          <tr>
+            <td><%= time_log.log_date.strftime('%d %B, %Y') %></td>
+            <td><%= time_log.time_in_hours %></td>
+            <td><%= time_log.task.title %></td>
+            <td><%= time_log.status %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
