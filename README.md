@@ -1,24 +1,42 @@
-# README
+# AI-Project Management Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Please go through the readme to setup this project locally on your system.
 
-Things you may want to cover:
+## Dependencies
+* Ruby - 3.0 or later
+* Rails - 7.0 or later
+* NodeJS - 14.0 or later
+* Yarn 1.22 or later
 
-* Ruby version
+# Installation
 
-* System dependencies
+To setup the project first clone it:
+```
+git clone https://github.com/appsimpactacademy/ai-project-mgmt.git
+```
+Install gems
+```
+cd ai-project-mgmt
+bundle install
+```
+Run all migrations:
+```
+rails db:create
+rails db:migrate
+```
+Install yarn packages:
+```
+yarn install
+```
 
-* Configuration
+Build the application css:
+```
+yarn build:css
+```
 
-* Database creation
+And the run the rails server to see the project on localhost:
+```
+rails server
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+And then open the project in the browser with [http://localhost:3000]
