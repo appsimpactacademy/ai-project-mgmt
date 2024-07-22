@@ -5,10 +5,16 @@ class Employee::TimesheetsController < EmployeeController
 
   def project_time_sheet
     @project = EmployeeProject.find(params[:employee_project_id]).project
-    @all_time_logs = current_employee.time_logs.where(employee_project_id: params[:employee_project_id])
-    @total_number_of_tasks = @all_time_logs.pluck(:task_id).uniq.count
-    @total_time_spent = "#{@all_time_logs.pluck(:time_in_hours).sum} hours"
-    @total_working_days = @all_time_logs.pluck(:log_date).uniq.count
+    @all_time_logs = current_employee.time_logs
+                                     .includes(:task)
+                                     .where(employee_project_id: params[:employee_project_id])
+                                     .select(:task_id, :time_in_hours, :log_date, :status)
+
+    @card_items = {
+      'Total Tasks' => @all_time_logs.map(&:task_id).uniq.count,
+      'Total Time Spent' => "#{@all_time_logs.sum(&:time_in_hours)} hours",
+      'Total Work Days' => @all_time_logs.map(&:log_date).uniq.count
+    }
   end
 
   def log_time

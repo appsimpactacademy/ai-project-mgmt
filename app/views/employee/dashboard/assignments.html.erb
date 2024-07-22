@@ -17,3 +17,40 @@
     <% end %>
   </div>
 <% end %>
+
+<div class="card mt-5">
+  <div class="card-body">
+    <canvas id="myChart" style="width:100%;min-width:600px"></canvas>
+  </div>
+</div>
+
+
+<script>
+  var xValues = []
+  var yValues = [];
+  <% @employee_projects.each do |ep| %>
+    xValues.push("<%= ep.project.title %>")
+    yValues.push(<%= ep.time_logs.pluck(:time_in_hours).sum %>)
+  <% end %>
+  var barColors = [
+    "#b91d47",
+    "#00aba9"
+  ];
+
+  new Chart("myChart", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Your work time allocation project wise"
+      }
+    }
+  });
+</script>
