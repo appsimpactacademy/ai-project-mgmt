@@ -1,11 +1,16 @@
 class Employee::TasksController < EmployeeController
   include Filterable
+  include Pagy::Backend
+
   before_action :set_task, only: %i[show edit update destroy]
   before_action :load_projects, only: %i[edit new]
 
   def index
     @q = current_employee.tasks.includes(:project).ransack(params[:q])
     @tasks = filter_by_date_range(@q.result(distinct: true))
+
+    # Paginate the results
+    @pagy, @tasks = pagy(@tasks, items: 5)
   end
   
   def new

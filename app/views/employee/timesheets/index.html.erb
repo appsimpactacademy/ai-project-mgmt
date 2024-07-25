@@ -15,19 +15,28 @@
 </div>
 
 <% if @time_logs.present? %>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Project</th>
-      <th>Total Time</th>
-      <th colspan="3">Actions</th>
-    </tr>
-  </thead>
-  <tbody id="time-logged-list">
-    <% @time_logs.each do |time_log| %>
-      <%= render "employee/time_logs/log", time_log: time_log %>
-    <% end %>
-  </tbody>
-</table>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Project</th>
+        <th>Total Time</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="time-logged-list">
+      <% @time_logs.each do |time_log| %>
+        <%= render "employee/time_logs/log", time_log: time_log %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="card">
+    <div class="card-body">
+      <h4>No Timelogs found for the selected search data.</h4>
+    </div>
+  </div>
 <% end %>
+<div class="pag-bar mt-5 pt-5">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+</div>
