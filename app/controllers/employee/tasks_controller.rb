@@ -1,9 +1,14 @@
 class Employee::TasksController < EmployeeController
+  include CsvExportDefinitions
   before_action :set_task, only: %i[show edit update destroy]
   before_action :load_projects, only: %i[edit new]
 
   def index
     @tasks = current_employee.tasks
+    respond_to do |format|
+      format.html
+      format.csv { send_data CsvExport.new(Task.all, TASK_HEADERS, TASK_MAPPINGS).generate_csv, filename: "tasks-#{Date.today}.csv" }
+    end
   end
 
   def new

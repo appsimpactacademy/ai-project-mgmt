@@ -1,6 +1,11 @@
 class Employee::TimesheetsController < EmployeeController
+  include CsvExportDefinitions
   def index
     @time_logs = current_employee.time_logs.order(log_date: :desc)
+    respond_to do |format|
+      format.html
+      format.csv { send_data CsvExport.new(TimeLog.all, TIME_LOG_HEADERS, TIME_LOG_MAPPINGS).generate_csv, filename: "time_logs-#{Date.today}.csv" }
+    end
   end
 
   def project_time_sheet

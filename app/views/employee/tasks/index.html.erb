@@ -1,6 +1,9 @@
 <% content_for :title, 'AiProjectMgmt | Employee Tasks' %>
-<%= link_to "New Task", new_employee_task_path, class: "btn btn-primary mb-3", data: { controller: "bs-modal-form" } %>
+<div class="mt-4 text-end mb-4">
+  <%= link_to "New Task", new_employee_task_path, class: "btn btn-primary", data: { controller: "bs-modal-form" } %>
 
+  <%= link_to 'Export', employee_tasks_path(format: :csv), class: "btn btn-primary" %>
+</div>
 <table class="table table-bordered">
   <thead>
     <tr>

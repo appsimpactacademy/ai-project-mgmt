@@ -12,6 +12,7 @@
         <% end %>
         <div>
           <%= link_to 'View Timesheet', employee_project_time_sheet_path(employee_project_id: ep.id), class: "btn btn-success" %>
+          <%= link_to 'Export Time Logs', employee_export_time_logs_path(ep.id, format: :csv), class: "btn btn-primary" %>
         </div>
       </div>
     <% end %>
