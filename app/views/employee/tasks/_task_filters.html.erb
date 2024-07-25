@@ -1,0 +1,18 @@
+<%= form_with(model: q, url: employee_tasks_path, method: "get", data: { turbo_form: true }) do |f| %>
+  <div class="d-flex">
+    <div class="form-group me-3">
+      <%= f.label :project_id_eq, "Filter by Project:" %>
+      <%= f.select :project_id_eq, options_for_select(Project.all.map { |project| [project.title, project.id] }, f.object.project_id_eq), { prompt: "Select Project" }, { class: "form-control", onchange: "this.form.submit();"} %>
+    </div>
+    <div class="form-group">
+      <label>Filter By dates</label>
+      <%= text_field_tag "q[date_range]", nil, 
+             class: 'form-control', 
+             placeholder: 'Select Date', 
+             data: { controller: 'flatpickr', range_select: 'true' }, value: @date_range %>
+    </div>
+    <div class="form-group mt-4 mx-3">
+      <%= f.submit 'filter', class: 'btn btn-secondary' %>
+    </div>
+  </div>
+<% end %>

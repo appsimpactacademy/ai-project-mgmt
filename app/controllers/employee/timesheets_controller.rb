@@ -1,6 +1,8 @@
 class Employee::TimesheetsController < EmployeeController
+  include Filterable
   def index
-    @time_logs = current_employee.time_logs.order(log_date: :desc)
+    @q = current_employee.time_logs.includes(employee_project: :project).order(log_date: :desc).ransack(params[:q])
+    @time_logs = filter_by_date_range(@q.result(distinct: true))
   end
 
   def project_time_sheet

@@ -1,0 +1,18 @@
+.flatpickr-custom-button {
+	display: block;
+	padding: 8px 16px;
+	margin-bottom: 8px;
+	cursor: pointer;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	text-align: center;
+}
+.flatpickr-custom-button:hover {
+  background-color: #0056b3;
+}
+.custom-buttons {
+	float: left;
+	margin-right: 20px; /* Adjust as needed */
+}

@@ -6,4 +6,8 @@ class EmployeeProject < ApplicationRecord
   has_many :time_logs
 
   validates :role, :current_status, :start_date, presence: true
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "current_status", "employee_id", "end_date", "id", "project_id", "role", "start_date", "updated_at"]
+  end
 end

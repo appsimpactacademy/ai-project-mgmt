@@ -1,9 +1,18 @@
 <% content_for :title, 'AiProjectMgmt | Employee Timesheets' %>
-<% if current_employee.tasks.blank? %>
-  <p class="lead">You do not have any active task to log time. Please add the task first.</p>
-<% else %>
-  <%= link_to "Add Time", new_employee_time_log_path, class: "btn btn-primary mb-3", data: { controller: "bs-modal-form" } %>
-<% end %>
+<div class="row mt-3">
+  <div class="align-items-center">
+    <div class="mb-3">
+      <%= render 'employee/time_logs/time_logs_filters', q: @q %>
+    </div>  
+  </div>
+  <div class="text-end">
+    <% if current_employee.tasks.blank? %>
+      <p class="lead">You do not have any active task to log time. Please add the task first.</p>
+    <% else %>
+      <%= link_to "Add Time", new_employee_time_log_path, class: "btn btn-primary mb-3", data: { controller: "bs-modal-form" } %>
+    <% end %>
+  </div>
+</div>
 
 <% if @time_logs.present? %>
 <table class="table table-bordered">

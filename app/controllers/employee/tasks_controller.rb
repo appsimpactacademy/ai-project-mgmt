@@ -1,11 +1,13 @@
 class Employee::TasksController < EmployeeController
+  include Filterable
   before_action :set_task, only: %i[show edit update destroy]
   before_action :load_projects, only: %i[edit new]
 
   def index
-    @tasks = current_employee.tasks
+    @q = current_employee.tasks.includes(:project).ransack(params[:q])
+    @tasks = filter_by_date_range(@q.result(distinct: true))
   end
-
+  
   def new
     @task = current_employee.tasks.new
   end
