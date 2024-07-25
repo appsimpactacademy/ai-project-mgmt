@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   root 'home#index'
-  devise_for :employees
+  devise_for :employees, controllers: {
+    sessions: 'employees/sessions',
+    registrations: 'employees/registrations',
+    passwords: 'employees/passwords',
+    confirmations: 'employees/confirmations'
+  }
   namespace :admin do 
     resources :projects
     resources :employees
