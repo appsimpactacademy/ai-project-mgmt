@@ -1,10 +1,13 @@
 class Employee::TimesheetsController < EmployeeController
   include CsvExportDefinitions
+  include CsvExportable
+
   def index
     @time_logs = current_employee.time_logs.order(log_date: :desc)
+    filter_tasks_by_date if params[:date_range].present?
     respond_to do |format|
       format.html
-      format.csv { send_data CsvExport.new(TimeLog.all, TIME_LOG_HEADERS, TIME_LOG_MAPPINGS).generate_csv, filename: "time_logs-#{Date.today}.csv" }
+      format.csv { handle_csv_export(@time_logs, TIME_LOG_HEADERS, TIME_LOG_MAPPINGS, employee_timesheets_path, 'time_logs') }
     end
   end
 
@@ -28,5 +31,13 @@ class Employee::TimesheetsController < EmployeeController
 
   def edit_logged_time
     @time_log = current_employee.time_logs.find(params[:id])
+  end
+
+  private
+  # Filters time_logs based on the provided date range
+  def filter_tasks_by_date
+    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
+    end_date = end_date.end_of_day
+    @time_logs = @time_logs.where(log_date: start_date..end_date)
   end
 end

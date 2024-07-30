@@ -1,5 +1,6 @@
 class Employee::DashboardController < EmployeeController
   include CsvExportDefinitions
+  include CsvExportable
   def index
   end
 
@@ -10,10 +11,20 @@ class Employee::DashboardController < EmployeeController
 
   def export_time_logs
     employee_project = current_employee.employee_projects.find(params[:id])
-    time_logs = employee_project.time_logs
+    @time_logs = employee_project.time_logs
 
+    filter_tasks_by_date if params[:date_range].present?
     respond_to do |format|
-      format.csv { send_data CsvExport.new(time_logs, TIME_LOG_HEADERS, TIME_LOG_MAPPINGS).generate_csv, filename: "time_logs_for_project_#{employee_project.project.title}.csv" }
+      format.html
+      format.csv { handle_csv_export(@time_logs, TIME_LOG_HEADERS, TIME_LOG_MAPPINGS, employee_assignments_path, 'time_logs' ) }
     end
+  end
+
+  private
+  # Filters time_logs based on the provided date range
+  def filter_tasks_by_date
+    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
+    end_date = end_date.end_of_day
+    @time_logs = @time_logs.where(log_date: start_date..end_date)
   end
 end

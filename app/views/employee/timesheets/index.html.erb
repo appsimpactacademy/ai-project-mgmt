@@ -6,7 +6,7 @@
   <% else %>
     <%= link_to "Add Time", new_employee_time_log_path, class: "btn btn-primary", data: { controller: "bs-modal-form" } %>
   <% end %>
-  <%= link_to 'Export', employee_timesheets_path(format: :csv), class: "btn btn-primary" %>
+  <%= link_to 'Export', '#exportModal', class: 'btn btn-primary', data: { bs_toggle: 'modal' } %>
 </div>
 <% if @time_logs.present? %>
 <table class="table table-bordered">
@@ -25,3 +25,4 @@
   </tbody>
 </table>
 <% end %>
+<%= render 'shared/export_modal', export_path: employee_timesheets_path(format: :csv), modal_title: 'Export Options' %>

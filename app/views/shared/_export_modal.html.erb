@@ -1,0 +1,46 @@
+<!-- Modal Structure -->
+<%= turbo_stream.replace "remote_modal" do %>
+  <%= turbo_frame_tag :remote_modal, target: :_top do %>
+    
+		<div class="modal fade" id="exportModal" tabindex="-1" data-controller="export-options" aria-labelledby="exportModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exportModalLabel">Export Options</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <%= form_with url: export_path, method: :get, data: { turbo: "true"}, html: { data: { export_options_target: "form" } } do %>
+		          <div class="mb-3">
+		            <label for="date_range" class="form-label">Select Date Range</label>
+		            <input type="text" name="date_range" id="date_range" class="form-control" 
+		                   placeholder="YYYY-MM-DD to YYYY-MM-DD" 
+		                   data-export-options-target="dateField"
+		                   data-controller="flatpickr"
+		                   data-range-select="true">
+		          </div>
+		          <div class="mb-3">
+		            <div class="d-flex align-items-center">
+		              <div class="form-check me-3">
+		                <input type="checkbox" name="export_option[]" id="download" value="download" class="form-check-input"
+		                       data-export-options-target="checkbox">
+		                <label class="form-check-label" for="download">Download</label>
+		              </div>
+		              <div class="form-check">
+		                <input type="checkbox" name="export_option[]" id="email" value="email" class="form-check-input"
+		                       data-export-options-target="checkbox">
+		                <label class="form-check-label" for="email">Email Me</label>
+		              </div>
+		            </div>
+		          </div>
+
+		          <div class="modal-footer">
+		            <button type="submit" class="btn btn-primary">Proceed</button>
+		          </div>
+		        <% end %>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+  <% end %>
+<% end %>

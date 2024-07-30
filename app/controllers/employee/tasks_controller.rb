@@ -1,13 +1,16 @@
 class Employee::TasksController < EmployeeController
   include CsvExportDefinitions
+  include CsvExportable
+
   before_action :set_task, only: %i[show edit update destroy]
   before_action :load_projects, only: %i[edit new]
 
   def index
     @tasks = current_employee.tasks
+    filter_tasks_by_date if params[:date_range].present?
     respond_to do |format|
       format.html
-      format.csv { send_data CsvExport.new(Task.all, TASK_HEADERS, TASK_MAPPINGS).generate_csv, filename: "tasks-#{Date.today}.csv" }
+      format.csv { handle_csv_export(@tasks, TASK_HEADERS, TASK_MAPPINGS, employee_tasks_path, 'tasks' ) }
     end
   end
 
@@ -87,5 +90,12 @@ class Employee::TasksController < EmployeeController
 
   def load_projects
     @projects = current_employee.projects
+  end
+
+  # Filters tasks based on the provided date range
+  def filter_tasks_by_date
+    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
+    end_date = end_date.end_of_day
+    @tasks = @tasks.where(created_at: start_date..end_date)
   end
 end
