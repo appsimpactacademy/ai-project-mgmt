@@ -10,13 +10,15 @@
           <br>
           <small class="fw-bold">Closed On: <%= ep.end_date %></small>
         <% end %>
-        <div>
+        <div data-controller="export-options">
           <%= link_to 'View Timesheet', employee_project_time_sheet_path(employee_project_id: ep.id), class: "btn btn-success" %>
+          <%= link_to 'Export Time Logs', '#exportModal', class: 'btn btn-primary', data: { bs_toggle: 'modal', employee_project_id: ep.id } %>
         </div>
       </div>
     <% end %>
   </div>
 <% end %>
+<%= render 'shared/export_modal', export_path: employee_export_time_logs_path('PLACEHOLDER', format: :csv), modal_title: 'Export Options' %>
 
 <div class="card mt-5">
   <div class="card-body">

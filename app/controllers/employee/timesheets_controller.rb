@@ -1,11 +1,18 @@
 class Employee::TimesheetsController < EmployeeController
   include Filterable
   include Pagy::Backend
+  include CsvExportDefinitions
+  include CsvExportable
 
   def index
     @q = current_employee.time_logs.includes(employee_project: :project).order(log_date: :desc).ransack(params[:q])
     @time_logs = filter_by_date_range(@q.result(distinct: true))
+    filter_tasks_by_date if params[:date_range].present?
 
+    respond_to do |format|
+      format.html
+      format.csv { handle_csv_export(@time_logs, TIME_LOG_HEADERS, TIME_LOG_MAPPINGS, employee_timesheets_path, 'time_logs') }
+    end
     # Paginate the results
     @pagy, @time_logs = pagy(@time_logs, items: 5)
   end
@@ -30,5 +37,13 @@ class Employee::TimesheetsController < EmployeeController
 
   def edit_logged_time
     @time_log = current_employee.time_logs.find(params[:id])
+  end
+
+  private
+  # Filters time_logs based on the provided date range
+  def filter_tasks_by_date
+    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
+    end_date = end_date.end_of_day
+    @time_logs = @time_logs.where(log_date: start_date..end_date)
   end
 end

@@ -5,15 +5,15 @@
       <%= render 'employee/time_logs/time_logs_filters', q: @q %>
     </div>  
   </div>
-  <div class="text-end">
+  <div class="text-end mb-3">
     <% if current_employee.tasks.blank? %>
       <p class="lead">You do not have any active task to log time. Please add the task first.</p>
     <% else %>
-      <%= link_to "Add Time", new_employee_time_log_path, class: "btn btn-primary mb-3", data: { controller: "bs-modal-form" } %>
+      <%= link_to "Add Time", new_employee_time_log_path, class: "btn btn-primary", data: { controller: "bs-modal-form" } %>
     <% end %>
+    <%= link_to 'Export', '#exportModal', class: 'btn btn-primary', data: { bs_toggle: 'modal' } %>
   </div>
 </div>
-
 <% if @time_logs.present? %>
   <table class="table table-bordered">
     <thead>
@@ -40,3 +40,4 @@
 <div class="pag-bar mt-5 pt-5">
   <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
 </div>
+<%= render 'shared/export_modal', export_path: employee_timesheets_path(format: :csv), modal_title: 'Export Options' %>

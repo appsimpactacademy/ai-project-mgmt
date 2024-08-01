@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :employee do 
     get 'dashboard' => 'dashboard#index'
     get 'assignments' => 'dashboard#assignments'
+    get 'dashboard/export_time_logs/:id', to: 'dashboard#export_time_logs', as: :export_time_logs
     get 'timesheets' => 'timesheets#index'
     get 'log_time' => 'timesheets#log_time'
     get 'project_time_sheet' => 'timesheets#project_time_sheet'

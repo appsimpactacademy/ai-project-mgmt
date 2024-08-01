@@ -1,0 +1,45 @@
+<!-- Modal Structure -->
+<div class="modal fade" id="exportModal" tabindex="-1" data-controller="export-options" aria-labelledby="exportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exportModalLabel">Export Options</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with url: export_path, method: :get, data: { turbo: "true"}, html: { data: { export_options_target: "form" } } do |form| %>
+          <% if params[:q].present? %>
+						<% params[:q].each do |key, value| %>
+				      <%= hidden_field_tag "q[#{key}]", value %>
+				    <% end %>
+				  <% end %>  
+          <div class="mb-3">
+				    <%= form.label :date_range, 'Select Date Range', class: 'form-label' %>
+				    <%= form.text_field :date_range, 
+				        id: 'date_range', 
+				        class: 'form-control', 
+				        placeholder: 'YYYY-MM-DD to YYYY-MM-DD', 
+				        data: { export_options_target: 'dateField', controller: 'flatpickr', range_select: true } %>
+				  </div>
+
+				  <div class="mb-3">
+				    <div class="d-flex align-items-center">
+				      <div class="form-check me-3">
+				        <%= check_box_tag 'export_option[]', 'download', false, class: 'form-check-input', data: { export_options_target: 'checkbox' } %>
+				        <%= form.label :download, 'Download', class: 'form-check-label' %>
+				      </div>
+				      <div class="form-check">
+				        <%= check_box_tag 'export_option[]', 'email', false, class: 'form-check-input', data: { export_options_target: 'checkbox' } %>
+				        <%= form.label :email, 'Email Me', class: 'form-check-label' %>
+				      </div>
+				    </div>
+				  </div>
+
+				  <div class="modal-footer">
+				    <%= form.submit 'Proceed', class: 'btn btn-primary' %>
+				  </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
