@@ -1,1 +1,29 @@
 <% content_for :title, 'AiProjectMgmt | Employee Dashboard' %>
+<div class="container mt-4" data-controller="work-hours">
+  <div class="row justify-content-end">
+    <!-- Filter Select -->
+    <div class="w-auto">
+	    <select data-action="change->work-hours#filter" class="form-select">
+	      <option value="past_7_days" <%= 'selected' if params[:filter] == 'past_7_days' %>>Past 7 Days</option>
+	      <option value="past_15_days" <%= 'selected' if params[:filter] == 'past_15_days' %>>Past 15 Days</option>
+	      <option value="this_month" <%= 'selected' if params[:filter] == 'this_month' %>>This Month</option>
+	      <option value="previous_month" <%= 'selected' if params[:filter] == 'previous_month' %>>Previous Month</option>
+	      <option value="overall" <%= 'selected' if params[:filter] == 'overall' %>>Overall</option>
+	    </select>
+	  </div>  
+  </div>  
+  <!-- Total Hours Card -->
+  <div class="row">
+    <!-- Total Hours Card -->
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body text-center">
+          <i class="bi bi-clock" style="font-size: 2rem;"></i>
+          <h6 class="card-title mt-2">Total Hours Worked</h6>
+          <h4 class="card-text" data-work-hours-target="totalHours" id="total-hours"><%= @total_hours %> hours</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Add more cards here if needed -->
+  </div>
+</div>

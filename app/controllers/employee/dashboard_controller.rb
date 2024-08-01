@@ -2,6 +2,13 @@ class Employee::DashboardController < EmployeeController
   include CsvExportDefinitions
   include CsvExportable
   def index
+    filter = params[:filter] || 'past_7_days'
+    @time_logs = current_employee.time_logs.filter_by_days(filter)
+    @total_hours = @time_logs.sum(:time_in_hours) # Calculate total hours worked
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def assignments
