@@ -3,14 +3,15 @@
   <div class="row justify-content-end">
     <!-- Filter Select -->
     <div class="w-auto">
-	    <select data-action="change->work-hours#filter" class="form-select">
-	      <option value="past_7_days" <%= 'selected' if params[:filter] == 'past_7_days' %>>Past 7 Days</option>
-	      <option value="past_15_days" <%= 'selected' if params[:filter] == 'past_15_days' %>>Past 15 Days</option>
-	      <option value="this_month" <%= 'selected' if params[:filter] == 'this_month' %>>This Month</option>
-	      <option value="previous_month" <%= 'selected' if params[:filter] == 'previous_month' %>>Previous Month</option>
-	      <option value="overall" <%= 'selected' if params[:filter] == 'overall' %>>Overall</option>
-	    </select>
-	  </div>  
+      <label class="mb-2">Filter Total Hours</label>
+      <select data-action="change->work-hours#filter" class="form-select form-control" id="filterSelect">
+        <option value="past_7_days" <%= 'selected' if params[:filter] == 'past_7_days' %>>Past 7 Days</option>
+        <option value="past_15_days" <%= 'selected' if params[:filter] == 'past_15_days' %>>Past 15 Days</option>
+        <option value="this_month" <%= 'selected' if params[:filter] == 'this_month' %>>This Month</option>
+        <option value="previous_month" <%= 'selected' if params[:filter] == 'previous_month' %>>Previous Month</option>
+        <option value="overall" <%= 'selected' if params[:filter] == 'overall' %>>Overall</option>
+      </select>
+    </div>  
   </div>  
   <!-- Total Hours Card -->
   <div class="row">
@@ -19,11 +20,15 @@
       <div class="card">
         <div class="card-body text-center">
           <i class="bi bi-clock" style="font-size: 2rem;"></i>
-          <h6 class="card-title mt-2">Total Hours Worked</h6>
+          <h6 class="card-title mt-2"> Hours Worked</h6>
           <h4 class="card-text" data-work-hours-target="totalHours" id="total-hours"><%= @total_hours %> hours</h4>
         </div>
       </div>
     </div>
     <!-- Add more cards here if needed -->
+  </div>
+
+  <div data-chart-filter="past_7_days">
+    <canvas data-work-hours-target="chart" id="weeklyChart"></canvas>
   </div>
 </div>

@@ -10,7 +10,6 @@ class Employee::TasksController < EmployeeController
   def index
     @q = current_employee.tasks.includes(:project).ransack(params[:q])
     @tasks = filter_by_date_range(@q.result(distinct: true))
-    filter_tasks_by_date if params[:date_range].present?
     respond_to do |format|
       format.html
       format.csv { handle_csv_export(@tasks, TASK_HEADERS, TASK_MAPPINGS, employee_tasks_path, 'tasks' ) }
@@ -95,12 +94,5 @@ class Employee::TasksController < EmployeeController
 
   def load_projects
     @projects = current_employee.projects
-  end
-
-  # Filters tasks based on the provided date range
-  def filter_tasks_by_date
-    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
-    end_date = end_date.end_of_day
-    @tasks = @tasks.where(created_at: start_date..end_date)
   end
 end
