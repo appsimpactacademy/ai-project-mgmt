@@ -1,18 +1,18 @@
 <% content_for :title, 'AiProjectMgmt | Employee Tasks' %>
-<div class="row mt-3">
-  <div class="d-flex align-items-center">
-    <div class="mb-3">
-      <%= render 'task_filters', q: @q %>
-    </div>  
-  </div>
-  <div class="text-end mb-3">
-    <%= link_to "New Task", new_employee_task_path, class: "btn btn-primary", data: { controller: "bs-modal-form" } %>
-
-    <%= link_to 'Export', '#exportModal', class: 'btn btn-primary', data: { bs_toggle: 'modal' } %>
-  </div>
-</div>
-
 <% if @tasks.present? %>
+  <div class="row mt-3">
+    <div class="d-flex align-items-center">
+      <div class="mb-3">
+        <%= render 'task_filters', q: @q, projects: @projects %>
+      </div>  
+    </div>
+    <div class="text-end mb-3">
+      <%= link_to "New Task", new_employee_task_path, class: "btn btn-primary", data: { controller: "bs-modal-form" } %>
+
+      <%= link_to 'Export', '#exportModal', class: 'btn btn-primary', data: { bs_toggle: 'modal' } %>
+    </div>
+  </div>
+
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -29,7 +29,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="card">
+  <div class="card mt-4">
     <div class="card-body">
       <h4>No tasks found for the selected project.</h4>
     </div>

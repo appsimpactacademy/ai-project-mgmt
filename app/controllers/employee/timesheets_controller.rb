@@ -5,6 +5,8 @@ class Employee::TimesheetsController < EmployeeController
   include CsvExportable
 
   def index
+    @employee_projects = current_employee.employee_projects.includes(:project)
+    @projects = current_employee.projects.where(id: @employee_projects.pluck(:project_id)).pluck(:title)
     @q = current_employee.time_logs.includes(employee_project: :project).order(log_date: :desc).ransack(params[:q])
     @time_logs = filter_by_date_range(@q.result(distinct: true))
 

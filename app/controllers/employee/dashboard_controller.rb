@@ -12,7 +12,10 @@ class Employee::DashboardController < EmployeeController
     respond_to do |format|
       format.html
       format.turbo_stream
-      format.json { render json: { totalHours: @total_hours, labels: @weekly_data.keys.map(&:to_s), data: @weekly_data.values } }
+      format.json {
+        Rails.logger.debug("Weekly Data: #{@weekly_data.inspect}")
+        render json: { totalHours: @total_hours, labels: @weekly_data.keys.map(&:to_s), data: @weekly_data.values } 
+      }
     end
   end
 
@@ -41,8 +44,10 @@ class Employee::DashboardController < EmployeeController
   end
 
   def group_by_week(time_logs)
-    time_logs.group_by { |log| log.log_date.beginning_of_week }.transform_values do |logs|
+    grouped_data = time_logs.group_by { |log| log.log_date.beginning_of_week }.transform_values do |logs|
       logs.sum(&:time_in_hours)
     end
+    Rails.logger.debug("Grouped Data: #{grouped_data.inspect}")
+    grouped_data
   end
 end

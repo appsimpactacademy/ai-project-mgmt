@@ -15,13 +15,15 @@ Rails.application.routes.draw do
     get 'timesheets' => 'timesheets#index'
     get 'log_time' => 'timesheets#log_time'
     get 'project_time_sheet' => 'timesheets#project_time_sheet'
+    get 'assign_task' => 'tasks#assign_task'
+    post 'assign_task_to_employee' => 'tasks#assign_task_to_employee'
     resources :tasks do
       collection do 
         get :fetch_project_tasks
       end
     end
     resources :time_logs do 
-      collection do 
+      collection do
         get :fetch_logged_dates
       end
     end

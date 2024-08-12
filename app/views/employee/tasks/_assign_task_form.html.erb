@@ -1,0 +1,27 @@
+<% if @projects.present? && @tasks.present? %>
+	<div class="modal-body">
+		<%= form_with(model: @task, url: employee_assign_task_to_employee_path, method: :post) do |form| %>
+			<div class="form-group mt-3">
+				<%= form.label :project_id, "Select Project" %>
+				<%= form.collection_select :project_id, @projects, :id, :title, { prompt: 'Select Project' }, { class: 'form-control' } %>
+			</div>
+
+			<div class="form-group mt-3">
+				<%= form.label :task_id, "Select Task" %>
+				<%= form.collection_select :task_id, @tasks, :id, :title, { prompt: 'Select Task' }, { class: 'form-control' } %>
+			</div>
+
+			<div class="form-group mt-3">
+				<%= form.label :employee_id, "Select Employee" %>
+				<%= form.collection_select :employee_id, Employee.all, :id, :full_name, { prompt: 'Select Employee' }, { class: 'form-control' } %>
+			</div>
+			<%= form.submit "Assign Task", class: 'btn btn-primary mt-3' %>
+		<% end %>
+	</div>
+<% else %>
+  <div class="card">
+  	<div class="card-body">
+      <h5>It looks like you don't have any projects or tasks yet. Please create a project and add tasks to it before assigning them to an employee.</h5>
+  	</div>
+  </div>
+<% end %>
