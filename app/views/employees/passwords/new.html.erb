@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Forgot Your Password?</h2>
+  </div>
+  <div class="card-body">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "employees/shared/error_messages", resource: resource %>
+
+      <div class="mb-3">
+        <%= f.label :email, class: "form-label" %>
+        <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.submit "Send me reset password instructions", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <%= render "employees/shared/links" %>
+  </div>
+</div>
+  
