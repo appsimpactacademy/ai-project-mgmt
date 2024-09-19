@@ -13,6 +13,23 @@ class TimeLog < ApplicationRecord
     end_date ||= start_date
     where(log_date: start_date..end_date)
   }
+   # Scope for filtering based on the date range
+  scope :filter_by_days, ->(filter) {
+    case filter
+    when 'past_7_days'
+      where(log_date: 7.days.ago.to_date..Date.today)
+    when 'past_15_days'
+      where(log_date: 15.days.ago.to_date..Date.today)
+    when 'this_month'
+      where(log_date: Date.today.beginning_of_month..Date.today.end_of_month)
+    when 'previous_month'
+      where(log_date: 1.month.ago.beginning_of_month..1.month.ago.end_of_month)
+    when 'overall'
+      all
+    else
+      where(log_date: 7.days.ago.to_date..Date.today) # Default filter
+    end
+  }
 
   def self.ransackable_attributes(auth_object = nil)
     ["created_at", "description", "employee_id", "employee_project_id", "id", "log_date", "status", "task_id", "task_type", "time_in_hours", "updated_at"]

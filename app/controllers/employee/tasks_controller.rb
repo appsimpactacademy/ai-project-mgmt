@@ -8,9 +8,10 @@ class Employee::TasksController < EmployeeController
   before_action :load_projects, only: %i[edit new]
 
   def index
+    @employee_projects = current_employee.employee_projects.includes(:project)
+    @projects = current_employee.projects.where(id: @employee_projects.pluck(:project_id)).pluck(:title)
     @q = current_employee.tasks.includes(:project).ransack(params[:q])
     @tasks = filter_by_date_range(@q.result(distinct: true))
-    filter_tasks_by_date if params[:date_range].present?
     respond_to do |format|
       format.html
       format.csv { handle_csv_export(@tasks, TASK_HEADERS, TASK_MAPPINGS, employee_tasks_path, 'tasks' ) }
@@ -21,6 +22,23 @@ class Employee::TasksController < EmployeeController
   
   def new
     @task = current_employee.tasks.new
+  end
+
+  def assign_task
+    if current_employee.project_manager?
+      @tasks = current_employee.tasks.includes(:project)
+      @employee_projects = current_employee.employee_projects.includes(:project)
+      @projects = current_employee.projects.where(id: @employee_projects.pluck(:project_id)).pluck(:title)
+    end
+  end
+
+  def assign_task_to_employee
+    @task = Task.find(params[:task_id])
+    if @task.update(employee_id: params[:employee_id], project_id: params[:project_id])
+      redirect_to employee_dashboard_path, notice: 'Task was successfully assigned.'
+    else
+      redirect_to employee_dashboard_path, alert: 'Failed to assign task.'
+    end
   end
 
   def show; end
@@ -80,7 +98,9 @@ class Employee::TasksController < EmployeeController
 
   def fetch_project_tasks
     employee_project = current_employee.employee_projects.find(params[:project_id])
-    @tasks = current_employee.tasks.where(project_id: employee_project.project_id)
+    project_tasks = current_employee.tasks.where(project_id: employee_project.project_id)
+    completed_task_ids = TimeLog.where(status: 'Completed').pluck(:task_id).uniq
+    @tasks = project_tasks.where.not(id: completed_task_ids)
   end
 
   private
@@ -95,12 +115,5 @@ class Employee::TasksController < EmployeeController
 
   def load_projects
     @projects = current_employee.projects
-  end
-
-  # Filters tasks based on the provided date range
-  def filter_tasks_by_date
-    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
-    end_date = end_date.end_of_day
-    @tasks = @tasks.where(created_at: start_date..end_date)
   end
 end

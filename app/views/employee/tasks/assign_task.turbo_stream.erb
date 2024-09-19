@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "flash" do %>
+  <%= render partial: "shared/flash" %>
+<% end %>
+
+<%= turbo_stream.replace "remote_modal" do %>
+  <%= render 'shared/turbo_modal', modal_title: 'Assign Task', form_partial: "employee/tasks/assign_task_form" %>
+<% end %>

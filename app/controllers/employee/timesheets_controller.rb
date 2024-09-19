@@ -5,9 +5,10 @@ class Employee::TimesheetsController < EmployeeController
   include CsvExportable
 
   def index
+    @employee_projects = current_employee.employee_projects.includes(:project)
+    @projects = current_employee.projects.where(id: @employee_projects.pluck(:project_id)).pluck(:title)
     @q = current_employee.time_logs.includes(employee_project: :project).order(log_date: :desc).ransack(params[:q])
     @time_logs = filter_by_date_range(@q.result(distinct: true))
-    filter_tasks_by_date if params[:date_range].present?
 
     respond_to do |format|
       format.html
@@ -37,13 +38,5 @@ class Employee::TimesheetsController < EmployeeController
 
   def edit_logged_time
     @time_log = current_employee.time_logs.find(params[:id])
-  end
-
-  private
-  # Filters time_logs based on the provided date range
-  def filter_tasks_by_date
-    start_date, end_date = params[:date_range].split(" to ").map(&:to_date)
-    end_date = end_date.end_of_day
-    @time_logs = @time_logs.where(log_date: start_date..end_date)
   end
 end

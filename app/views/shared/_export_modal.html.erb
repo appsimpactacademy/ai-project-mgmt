@@ -13,15 +13,16 @@
 				      <%= hidden_field_tag "q[#{key}]", value %>
 				    <% end %>
 				  <% end %>  
-          <div class="mb-3">
-				    <%= form.label :date_range, 'Select Date Range', class: 'form-label' %>
-				    <%= form.text_field :date_range, 
-				        id: 'date_range', 
-				        class: 'form-control', 
-				        placeholder: 'YYYY-MM-DD to YYYY-MM-DD', 
-				        data: { export_options_target: 'dateField', controller: 'flatpickr', range_select: true } %>
-				  </div>
-
+          <% if params[:action] == "assignments" %>
+	          <div class="mb-3">
+					    <%= form.label :date_range, 'Select Date Range', class: 'form-label' %>
+					    <%= form.text_field :date_range, 
+					        id: 'date_range', 
+					        class: 'form-control', 
+					        placeholder: 'YYYY-MM-DD to YYYY-MM-DD', 
+					        data: { export_options_target: 'dateField', controller: 'flatpickr', range_select: true } %>
+					  </div>
+					<% end %>
 				  <div class="mb-3">
 				    <div class="d-flex align-items-center">
 				      <div class="form-check me-3">
