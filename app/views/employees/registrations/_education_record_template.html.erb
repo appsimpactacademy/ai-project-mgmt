@@ -1,0 +1,41 @@
+<% unique_id = "error_NEW_RECORD" %>
+
+<template id="education_template">
+  <div class="nested-fields education-record mb-3 border p-3 rounded">
+    <%= hidden_field_tag 'employee[education_records_attributes][NEW_RECORD][_destroy]', nil, class: 'hidden-destroy' %>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][course_name]', 'Course Name', class: 'form-label' %>
+      <%= text_field_tag 'employee[education_records_attributes][NEW_RECORD][course_name]', nil, class: 'form-control' %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][college_or_university]', 'Collage or University', class: 'form-label' %>
+      <%= text_field_tag 'employee[education_records_attributes][NEW_RECORD][college_or_university]', nil, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][start_year]', 'Start Year', class: 'form-label' %>
+      <%= number_field_tag 'employee[education_records_attributes][NEW_RECORD][start_year]', nil, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][end_year]', 'End Year', class: 'form-label' %>
+      <%= number_field_tag 'employee[education_records_attributes][NEW_RECORD][end_year]', nil, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][marks]', 'Marks', class: 'form-label' %>
+      <%= number_field_tag 'employee[education_records_attributes][NEW_RECORD][marks]', nil, class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][is_pursuing]', 'Currently Pursuing', class: 'form-label' %>
+      <%= check_box_tag 'employee[education_records_attributes][NEW_RECORD][is_pursuing]', '1', false, class: 'form-check-input' %>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Remove Education Record', '#', class: 'btn btn-danger btn-sm', data: { action: 'click->nested-form#removeEducation' } %>
+    </div>
+  </div>
+</template>

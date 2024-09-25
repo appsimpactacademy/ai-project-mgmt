@@ -9,7 +9,7 @@ class Employee::TasksController < EmployeeController
 
   def index
     @employee_projects = current_employee.employee_projects.includes(:project)
-    @projects = current_employee.projects.where(id: @employee_projects.pluck(:project_id)).pluck(:title)
+    @projects = current_employee.projects.where(id: @employee_projects.pluck(:project_id))
     @q = current_employee.tasks.includes(:project).ransack(params[:q])
     @tasks = filter_by_date_range(@q.result(distinct: true))
     respond_to do |format|

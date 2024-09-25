@@ -11,9 +11,10 @@ Rails.application.routes.draw do
     resources :employees
     resources :employee_projects
     resources :skills
+    resources :templates
   end
 
-  namespace :employee do 
+  namespace :employee do
     get 'dashboard' => 'dashboard#index'
     get 'assignments' => 'dashboard#assignments'
     get 'dashboard/export_time_logs/:id', to: 'dashboard#export_time_logs', as: :export_time_logs
@@ -33,4 +34,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  get 'select-template' => 'home#select_template'
+  get 'get_resume/:id' => 'home#get_resume', as: :get_resume
+  get 'download_template/:id' => 'home#download_template', as: :download_template
 end

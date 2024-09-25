@@ -1,0 +1,34 @@
+<div class="template-section mt-4">
+	<div class="row">
+		<div class="col-md-6">
+			<h5 class="mt-4">Resume Templates</h5>
+		</div>
+		<div class="col-md-6 text-end">
+		  <%= link_to 'Add Templates', new_admin_template_path, class: 'btn btn-primary' %>
+		</div>  
+	</div>
+  <div class="row">
+    <% @templates.each do |template| %>
+      <div class="col-md-4">
+        <div class="card shadow text-dark position-relative">
+          <%= image_tag template.template_image, class: 'card-img' %>
+          <div class="card-img-overlay template-overlay d-flex justify-content-center align-items-center">
+            <h5 class="card-title text-center"><%= template.name %></h5>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>		
+</div>
+
+<style>
+  .template-overlay {
+    background-color: rgba(255, 255, 255, 0.7); /* Light background */
+    transition: background-color 0.3s ease;
+    opacity: 0; /* Initially hidden */
+  }
+
+  .card:hover .template-overlay {
+    opacity: 1; /* Show on hover */
+  }
+</style>

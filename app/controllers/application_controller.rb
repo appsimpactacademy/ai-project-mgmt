@@ -24,4 +24,12 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def after_sign_in_path_for(resource)
+    if resource.admin_employee?
+      admin_employees_path
+    else
+      super # Default behavior for other roles
+    end
+  end
 end

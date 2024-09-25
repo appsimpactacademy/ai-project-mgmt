@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 border">
+      <div class="p-2">
+        <header class="text-center mb-4">
+          <h1 class="display-4"><%= "#{@employee.first_name} #{@employee.last_name}" %></h1>
+          <div class="contact text-muted">
+            <%= "#{@employee.email} | #{@employee.contact_number}" %>
+          </div>
+        </header>
+
+        <section class="mb-4">
+          <h2 class="h4">Summary</h2>
+          <p>
+            I am a front-end developer with more than 3 years of experience writing HTML, CSS, and JS. I'm motivated, result-focused and seeking a successful team-oriented company with the opportunity to grow.
+          </p>
+        </section>
+
+        <section class="mb-4">
+          <h2 class="h4">Experience</h2>
+          <table class="table table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Job Title</th>
+                <th>Company Name</th>
+                <th>Years</th>
+                <th>Responsibilities</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @employee.work_experiences.each do |work_exp| %>
+                <tr>
+                  <td><%= work_exp.job_title %></td>
+                  <td><%= work_exp.company_name %></td>
+                  <td><%= "#{work_exp.start_date.strftime("%Y")} - #{work_exp.end_date.strftime("%Y")}" %></td>
+                  <td>
+                    <ul class="list-unstyled">
+                      <li><%= work_exp.description %></li>
+                    </ul>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="mb-4">
+          <h2 class="h4">Education</h2>
+          <table class="table table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Field of Study</th>
+                <th>Institution</th>
+                <th>Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @employee.education_records.each do |education_record| %>
+                <tr>
+                  <td><%= education_record.course_name %></td>
+                  <td><%= education_record.college_or_university %></td>
+                  <td><%= education_record.end_year %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="mb-4">
+          <h2 class="h4">Skills</h2>
+          <ul class="list-unstyled">
+            <% @employee.skills.each do |skill| %>
+              <li><%= skill.name %></li>
+            <% end %>
+          </ul>
+        </section>
+
+        <section class="mb-4">
+          <h2 class="h4">Interests</h2>
+          <ul class="list-unstyled">
+            <% @employee.hobbies.each do |hobby| %>
+              <li><%= hobby.name %></li>
+            <% end %>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
