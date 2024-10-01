@@ -27,14 +27,14 @@
       <%= date_field_tag 'employee[work_experiences_attributes][NEW_RECORD][start_date]', nil, class: 'form-control' %>
     </div>
 
-    <div class="form-group mb-4">
+    <div class="form-group mb-4" data-nested-form-target='endDate'>
       <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][end_date]', 'End Date', class: 'form-label' %>
       <%= date_field_tag 'employee[work_experiences_attributes][NEW_RECORD][end_date]', nil, class: 'form-control', include_blank: true %>
     </div>
 
     <div class="form-group mb-4">
       <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][is_currently_working_here]', 'Currently Working Here', class: 'form-label' %>
-      <%= check_box_tag 'employee[work_experiences_attributes][NEW_RECORD][is_currently_working_here]', '1', false, class: 'form-check-input' %>
+      <%= check_box_tag 'employee[work_experiences_attributes][NEW_RECORD][is_currently_working_here]', '1', false, class: 'form-check-input', data: {action: 'click->nested-form#isWorkingChecked'} %>
     </div>
 
     <div class="d-flex justify-content-between">

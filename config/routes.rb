@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     passwords: 'employees/passwords',
     confirmations: 'employees/confirmations'
   }
+  devise_scope :employee do 
+    get '/employee_detail/:id' => 'employees/registrations#employee_detail', as: :employee_detail
+    get '/select_template' => 'employees/registrations#select_template', as: :select_template
+    get '/preview_template/:id' => 'employees/registrations#preview_template', as: :preview_template
+    get '/get_resume/:id' => 'employees/registrations#get_resume', as: :get_resume
+  end
   namespace :admin do 
     resources :projects
     resources :employees
@@ -34,7 +40,4 @@ Rails.application.routes.draw do
       end
     end
   end
-  get 'select-template' => 'home#select_template'
-  get 'get_resume/:id' => 'home#get_resume', as: :get_resume
-  get 'download_template/:id' => 'home#download_template', as: :download_template
 end

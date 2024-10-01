@@ -10,6 +10,6 @@
     <% end %>
   <% end %>
   <% if employee_signed_in? && employee_basic_details?(current_employee) %>
-    <%= link_to "Create Resume", select_template_path, class: "btn btn-secondary" %>
+    <%= link_to "Create Resume", edit_employee_registration_path, class: "btn btn-secondary" %>
   <% end %>
 </div>

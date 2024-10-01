@@ -1,0 +1,51 @@
+<div class="template-section container mt-4" data-controller='template-filter'>
+  <%= render 'shared/flash' %>
+  <div class="row mb-5">
+    <div class="col-md-6">
+      <h4>Resume Templates</h4>
+    </div>
+    <div class="col-md-6 text-end">
+      <%= link_to 'Back to home', root_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <% if @template_names.present? %>
+  
+    <!-- Dropdown for selecting templates -->
+    <div class="form-group">
+      <%= select_tag :template_name, options_from_collection_for_select(@template_names, :name, :name, @selected_template&.id), { class: 'form-control shadow form-select', data: {action: 'change->template-filter#filterTemplate' }} %>
+    </div>
+
+    <!-- Card to display selected template -->
+    <%= turbo_frame_tag 'template-card' %>
+  <% else %>
+    <div class="alert alert-warning" role="alert">
+      <strong>Attention:</strong> Currently, there are no templates uploaded by the admin. 
+      Please be patient as we work on providing you with new templates. 
+      Once they are available, you’ll have the opportunity to choose from a variety of options to create and design your attractive resumes. 
+      Thank you for your understanding!
+      <br><br>
+      <a href="javascript:history.back()" class="btn btn-link">Go Back</a>
+    </div>
+  <% end %>  
+</div>
+
+<style>
+  .card {
+    display: flex;
+    align-items: center; /* Center items vertically */
+  }
+
+  .card-img-right {
+    max-width: 150px; /* Set a max width for the image */
+    margin-left: 20px; /* Space between text and image */
+  }
+
+  .template-overlay {
+    background-color: rgba(255, 255, 255, 0.7); /* Light background */
+    transition: background-color 0.3s ease;
+  }
+
+  .card:hover .template-overlay {
+    opacity: 1; /* Show on hover */
+  }
+</style>

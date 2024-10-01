@@ -1,0 +1,24 @@
+<div class="download-template text-end me-5">
+  <button id="convert-to-pdf" class="btn btn-primary">Convert to PDF</button>
+</div>
+<hr>
+<div id='pdf'>
+  <%= render partial: "templates/#{@template_identifier}", locals: {employee: @employee} %>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.getElementById('convert-to-pdf').addEventListener('click', function() {
+    const options = {
+      margin: 0,
+      filename: 'timesheets.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      <%# pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }, %>
+      background: '#ffffff', // Set the background color to white
+    };
+    const pdf = new html2pdf(document.getElementById('pdf'), options);
+  	  pdf.save();
+  	});
+</script>
