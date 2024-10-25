@@ -94,144 +94,143 @@
       <%= image_tag 'unnamed.jpg', height: 100, width: 100 %>
     <% end %>
     <h1>
-      <%= @employee&.full_name || 'Name not available' %>
+      <%= @employee&.full_name %>
     </h1>
     <h2>
-      <%= @employee.job_title || 'Job title not available' %>
+      <%= @employee.job_title %>
     </h2>
     <p>
-      <%= @employee.contact_number || 'Contact number not available' %> • <%= @employee.email || 'Email not available' %>
+      <%= @employee.contact_number %> • <%= @employee.email %>
     </p>
   </div>
 
   <!-- Summary Section -->
-  <div class="section">
-    <div class="section-title">Summary</div>
-    <div class="section-content">
-      <p>
-        <%= @employee.about.present? ? @employee.about : 'No summary available' %>
-      </p>
+  <% if @employee.about.present? %>
+    <div class="section">
+      <div class="section-title">Summary</div>
+      <div class="section-content">
+        <p>
+          <%= @employee.about %>
+        </p>
+      </div>
     </div>
-  </div>
+  <% end %>  
 
   <!-- Experience Section -->
-  <div class="section">
-    <div class="section-title">Experience</div>
-    <div class="section-content">
-      <% if @employee.work_experiences.any? %>
-        <% @employee.work_experiences.each do |work_experience| %>
-          <div class="experience-item">
-            <h3><%= work_experience.job_title || 'Job title not available' %></h3>
-            <h4><%= work_experience.role || 'Role not available' %></h4>
-            <h4><%= work_experience.job_duration || 'Duration not available' %></h4>
-            <p><%= work_experience.description || 'Description not available' %></p>
-          </div>
-        <% end %>
-      <% else %>
-        <p>No work experience available</p>
-      <% end %>
+  <% if @employee.work_experiences.any? %>
+    <div class="section">
+      <div class="section-title">Experience</div>
+      <div class="section-content">
+          <% @employee.work_experiences.each do |work_experience| %>
+            <div class="experience-item">
+              <h3><%= work_experience.job_title || 'Job title not available' %></h3>
+              <h4><%= work_experience.role || 'Role not available' %></h4>
+              <h4><%= work_experience.job_duration || 'Duration not available' %></h4>
+              <p><%= work_experience.description || 'Description not available' %></p>
+            </div>
+          <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Education Section -->
-  <div class="section">
-    <div class="section-title">Education</div>
-    <div class="section-content">
-      <% if @employee.education_records.any? %>
-        <% @employee.education_records.each do |education_record| %>
-          <div class="education-item">
-            <h3><%= education_record.college_or_university || 'Institution not available' %></h3>
-            <h4><%= education_record.course_name || 'Course name not available' %></h4>
-            <h4><%= education_record.start_year || 'Start year not available' %> - <%= education_record.end_year || 'Present' %></h4>
-          </div>
-        <% end %>
-      <% else %>
-        <p>No education records available</p>
-      <% end %>
+  <% if @employee.education_records.any? %>
+    <div class="section">
+      <div class="section-title">Education</div>
+      <div class="section-content">
+          <% @employee.education_records.each do |education_record| %>
+            <div class="education-item">
+              <h3><%= education_record.college_or_university || 'Institution not available' %></h3>
+              <h4><%= education_record.course_name || 'Course name not available' %></h4>
+              <h4><%= education_record.start_year || 'Start year not available' %> - <%= education_record.end_year || 'Present' %></h4>
+            </div>
+          <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Skills Section -->
-  <div class="section">
-    <div class="section-title">Skills</div>
-    <div class="section-content">
-      <% if @employee.skills.any? %>
-        <ul class="skills-list">
-          <% @employee.skills.each do |skill| %>
-            <li><%= skill.name || 'Skill not available' %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>No skills available</p>
-      <% end %>
+  <% if @employee.skills.any? %>
+    <div class="section">
+      <div class="section-title">Skills</div>
+      <div class="section-content">
+          <ul class="skills-list">
+            <% @employee.skills.each do |skill| %>
+              <li><%= skill.name || 'Skill not available' %></li>
+            <% end %>
+          </ul>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Projects Section -->
-  <div class="section">
-    <div class="section-title">Projects</div>
-    <div class="section-content">
-      <% if @employee.projects.any? %>
-        <% @employee.projects.each do |project| %>
-          <div class="open-source-item">
-            <h3><%= project.title || 'Project title not available' %></h3>
-            <h4><%= project.start_date&.strftime("%b %Y") || 'Start date not available' %> - <%= project.end_date.present? ? project.end_date.strftime("%b %Y") : 'Pending' %></h4>
-            <h4><%= project.end_date.present? ? 'Completed' : 'Currently Working' %></h4>
-          </div>
-        <% end %>
-      <% else %>
-        <p>No projects available</p>
-      <% end %>
+  <% if @employee.projects.any? %>
+    <div class="section">
+      <div class="section-title">Projects</div>
+      <div class="section-content">
+          <% @employee.projects.each do |project| %>
+            <div class="open-source-item">
+              <h3><%= project.title || 'Project title not available' %></h3>
+              <h4><%= project.start_date&.strftime("%b %Y") || 'Start date not available' %> - <%= project.end_date.present? ? project.end_date.strftime("%b %Y") : 'Pending' %></h4>
+              <h4><%= project.end_date.present? ? 'Completed' : 'Currently Working' %></h4>
+            </div>
+          <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- Interest Section -->
-  <div class="section">
-    <div class="section-title">Interest</div>
-    <div class="section-content">
-      <%= @employee.hobbies.any? ? @employee.hobbies.map(&:name).join(', ') : 'No interests available' %>
+  <% if @employee.hobbies.any? %>
+    <div class="section">
+      <div class="section-title">Interest</div>
+      <div class="section-content">
+        <%= @employee.hobbies.any? ? @employee.hobbies.map(&:name).join(', ') : 'No interests available' %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
-  <div class="section">
-  <div class="section-title">Social Networks</div>
-  <div class="section-content social-link">
-    <% if @employee.social_network %>
-      <ul>
-        <% if @employee.social_network.linkedin_url.present? %>
-          <li>
-            <%= link_to "#{@employee.social_network.linkedin_url}", @employee.social_network.linkedin_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-          </li>
-        <% end %>
-        
-        <% if @employee.social_network.github_url.present? %>
-          <li>
-            <%= link_to 'GitHub', @employee.social_network.github_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-          </li>
-        <% end %>
+  <% if @employee.social_network&.attributes.except("id", "employee_id", "created_at", "updated_at").values.any?(&:present?) %>
+    <div class="section">
+      <div class="section-title">Social Networks</div>
+      <div class="section-content social-link">
+        <% if @employee.social_network %>
+          <ul>
+            <% if @employee.social_network.linkedin_url.present? %>
+              <li>
+                <%= link_to "#{@employee.social_network.linkedin_url}", @employee.social_network.linkedin_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+              </li>
+            <% end %>
+            
+            <% if @employee.social_network.github_url.present? %>
+              <li>
+                <%= link_to 'GitHub', @employee.social_network.github_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+              </li>
+            <% end %>
 
-        <% if @employee.social_network.stackoverflow_url.present? %>
-          <li>
-            <%= link_to 'Stack Overflow', @employee.social_network.stackoverflow_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-          </li>
-        <% end %>
+            <% if @employee.social_network.stackoverflow_url.present? %>
+              <li>
+                <%= link_to 'Stack Overflow', @employee.social_network.stackoverflow_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+              </li>
+            <% end %>
 
-        <% if @employee.social_network.twitter_url.present? %>
-            <%= link_to 'Twitter', @employee.social_network.twitter_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-          </li>
-        <% end %>
+            <% if @employee.social_network.twitter_url.present? %>
+             danger
+                <%= link_to 'Twitter', @employee.social_network.twitter_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+              </li>
+            <% end %>
 
-        <% if @employee.social_network.youtube_url.present? %>
-          <li>
-            <%= link_to 'YouTube', @employee.social_network.youtube_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-          </li>
+            <% if @employee.social_network.youtube_url.present? %>
+              <li>
+                <%= link_to 'YouTube', @employee.social_network.youtube_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No social networks available.</p>
         <% end %>
-      </ul>
-    <% else %>
-      <p>No social networks available.</p>
-    <% end %>
-  </div>
-</div>
+      </div>
+    </div>
+  <% end %>
 
  </body>
 </html>

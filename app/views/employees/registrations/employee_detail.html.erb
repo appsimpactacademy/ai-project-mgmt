@@ -36,47 +36,87 @@
         <strong>Job Title:</strong> <%= @employee.job_title %>
       </div>
 
-      <h5 class="mt-4">Education Records</h5>
-      <ul class="list-group">
-			  <% @employee.education_records.each do |education| %>
-			    <li class="list-group-item">
-			      <strong>Course:</strong> <%= education.course_name %>, 
-			      <strong>Start Year:</strong> <%= education.start_year %>,
-			      <strong>End Year:</strong> <%= education.end_year.present? ? education.end_year : 'Ongoing' %>,
-			      <strong>Marks:</strong> <%= education.marks.present? ? education.marks : 'N/A' %>,
-			      <strong>Institution:</strong> <%= education.college_or_university %>,
-			      <strong>Status:</strong> <%= education.is_pursuing? ? 'Pursuing' : 'Completed' %>
-			    </li>
-			  <% end %>
-			</ul>
-      <h5 class="mt-4">Work Experience</h5>
-      <ul class="list-group">
-			  <% @employee.work_experiences.each do |experience| %>
-			    <li class="list-group-item">
-			      <strong>Job Title:</strong> <%= experience.job_title %><br>
-			      <strong>Role:</strong> <%= experience.role %><br>
-			      <strong>Company:</strong> <%= experience.company_name %><br>
-			      <strong>Start Date:</strong> <%= experience.start_date %><br>
-			      <strong>End Date:</strong> <%= experience.end_date.present? ? experience.end_date : 'Currently Working' if experience.is_currently_working_here %><br>
-			      <strong>Description:</strong> <%= experience.description %>
-            <strong>Job Duration:</strong> <%= experience.job_duration %>
-			    </li>
-			  <% end %>
-			</ul>
+      <% if @employee.education_records.present? %>
+        <h5 class="mt-4">Education Records</h5>
+        <ul class="list-group">
+  			  <% @employee.education_records.each do |education| %>
+  			    <li class="list-group-item">
+  			      <strong>Course:</strong> <%= education.course_name %>, 
+  			      <strong>Start Year:</strong> <%= education.start_year %>,
+  			      <strong>End Year:</strong> <%= education.end_year.present? ? education.end_year : 'Ongoing' %>,
+  			      <strong>Marks:</strong> <%= education.marks.present? ? education.marks : 'N/A' %>,
+  			      <strong>Institution:</strong> <%= education.college_or_university %>,
+  			      <strong>Status:</strong> <%= education.is_pursuing? ? 'Pursuing' : 'Completed' %>
+  			    </li>
+  			  <% end %>
+			  </ul>
+      <% end %>  
+      <% if @employee.work_experiences.present? %>
+        <h5 class="mt-4">Work Experience</h5>
+        <ul class="list-group">
+  			  <% @employee.work_experiences.each do |experience| %>
+  			    <li class="list-group-item">
+  			      <strong>Job Title:</strong> <%= experience.job_title %><br>
+  			      <strong>Role:</strong> <%= experience.role %><br>
+  			      <strong>Company:</strong> <%= experience.company_name %><br>
+  			      <strong>Start Date:</strong> <%= experience.start_date %><br>
+  			      <strong>End Date:</strong> <%= experience.end_date.present? ? experience.end_date : 'Currently Working' if experience.is_currently_working_here %><br>
+  			      <strong>Description:</strong> <%= experience.description %>
+              <strong>Job Duration:</strong> <%= experience.job_duration %>
+  			    </li>
+  			  <% end %>
+			  </ul>
+      <% end %>  
+      <% if @employee.hobbies.present? %>
+        <h5 class="mt-4">Hobbies</h5>
+        <ul class="list-group">
+          <% @employee.hobbies.each do |hobby| %>
+           <%= hobby.name %>
+          <% end %>
+        </ul>
+      <% end %>
+      <% if @employee.skills.present? %>
+        <h5 class="mt-4">Skills</h5>
+        <ul class="list-group">
+          <% @employee.skills.each do |skill| %>
+            <%= @employee.hobbies.map(&:name).join(', ') %>
+          <% end %>
+        </ul>
+      <% end %> 
+      <% if @employee.social_network&.attributes.except("id", "employee_id", "created_at", "updated_at").values.any?(&:present?) %>
+        <h5 class="mt-4">Social Networks</h5>
+        <ul class="list-group mx-3">
+          <% if @employee.social_network.linkedin_url.present? %>
+            <li>
+              <%= link_to "#{@employee.social_network.linkedin_url}", @employee.social_network.linkedin_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+            </li>
+          <% end %>
+          
+          <% if @employee.social_network.github_url.present? %>
+            <li>
+              <%= link_to 'GitHub', @employee.social_network.github_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+            </li>
+          <% end %>
 
-      <h5 class="mt-4">Hobbies</h5>
-      <ul class="list-group">
-        <% @employee.hobbies.each do |hobby| %>
-         <%= hobby.name %>
-        <% end %>
-      </ul>
+          <% if @employee.social_network.stackoverflow_url.present? %>
+            <li>
+              <%= link_to 'Stack Overflow', @employee.social_network.stackoverflow_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+            </li>
+          <% end %>
 
-      <h5 class="mt-4">Skills</h5>
-      <ul class="list-group">
-        <% @employee.skills.each do |skill| %>
-          <%= @employee.hobbies.map(&:name).join(', ') %>
-        <% end %>
-      </ul>
+          <% if @employee.social_network.twitter_url.present? %>
+           danger
+              <%= link_to 'Twitter', @employee.social_network.twitter_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+            </li>
+          <% end %>
+
+          <% if @employee.social_network.youtube_url.present? %>
+            <li>
+              <%= link_to 'YouTube', @employee.social_network.youtube_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %> 
     </div>
   </div>
 </div>

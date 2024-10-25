@@ -149,76 +149,82 @@
               <%= image_tag 'unnamed.jpg', height: 100, width: 100, class: 'profile-pic' %>
             <% end %>
           </div>
-          <div class="skills mt-5">
-            <div class="icon-heading-container">
-              <div class="diamond">
-                <div class="inner-diamond"></div>
+          <% if @employee.skills.present? %>
+            <div class="skills mt-5">
+              <div class="icon-heading-container">
+                <div class="diamond">
+                  <div class="inner-diamond"></div>
+                </div>
+                <h3 class="section-title">SKILLS</h3>
               </div>
-              <h3 class="section-title">SKILLS</h3>
+              <% @employee.skills.each do |skill| %>
+                <span class="badge">
+                 <%= skill.name %>
+               </span>
+               <% end %>
             </div>
-            <% @employee.skills.each do |skill| %>
-              <span class="badge">
-               <%= skill.name %>
-             </span>
-             <% end %>
-          </div>
-          <div class="interests">
-            <div class="icon-heading-container">
-              <div class="diamond">
-                <div class="inner-diamond"></div>
+          <% end %>  
+          <% if @employee.hobbies.present? %>
+            <div class="interests">
+              <div class="icon-heading-container">
+                <div class="diamond">
+                  <div class="inner-diamond"></div>
+                </div>
+                <h3 class="section-title">INTERESTS</h3>
               </div>
-              <h3 class="section-title">INTERESTS</h3>
+              <% @employee.hobbies.each do |hobby| %>
+                <p>
+                  <i class="fas fa-heart hobby-icon">
+                  </i>
+                  <%= hobby.name %>
+                </p>
+              <% end %>
             </div>
-            <% @employee.hobbies.each do |hobby| %>
-              <p>
-                <i class="fas fa-heart hobby-icon">
-                </i>
-                <%= hobby.name %>
-              </p>
-            <% end %>
-          </div>
-          <div class="social-network">
-            <div class="icon-heading-container">
-              <div class="diamond">
-                <div class="inner-diamond"></div>
+          <% end %>
+          <% if @employee.social_network&.attributes.except("id", "employee_id", "created_at", "updated_at").values.any?(&:present?) %>
+            <div class="social-network">
+              <div class="icon-heading-container">
+                <div class="diamond">
+                  <div class="inner-diamond"></div>
+                </div>
+                <h3 class="section-title">Social Networks</h3>
               </div>
-              <h3 class="section-title">Social Networks</h3>
+              <% if @employee.social_network %>
+                <% if @employee.social_network.linkedin_url.present? %>
+                  <p>
+                    <%= link_to "#{@employee.social_network.linkedin_url}", @employee.social_network.linkedin_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+                  </p>
+                <% end %>
+                
+                <% if @employee.social_network.github_url.present? %>
+                  <p>
+                    <%= link_to 'GitHub', @employee.social_network.github_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+                  </p>
+                <% end %>
+
+                <% if @employee.social_network.stackoverflow_url.present? %>
+                  <p>
+                    <%= link_to 'Stack Overflow', @employee.social_network.stackoverflow_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+                  </p>
+                <% end %>
+
+                <% if @employee.social_network.twitter_url.present? %>
+                  <p>
+                    <%= link_to 'Twitter', @employee.social_network.twitter_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+                  </p>
+                <% end %>
+
+                <% if @employee.social_network.youtube_url.present? %>
+                  <p>
+                    <%= link_to 'YouTube', @employee.social_network.youtube_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
+                  </p>
+                <% end %>
+              <% else %>
+                <p>No social networks available.</p>
+              <% end %>
             </div>
-            <% if @employee.social_network %>
-              <% if @employee.social_network.linkedin_url.present? %>
-                <p>
-                  <%= link_to "#{@employee.social_network.linkedin_url}", @employee.social_network.linkedin_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-                </p>
-              <% end %>
-              
-              <% if @employee.social_network.github_url.present? %>
-                <p>
-                  <%= link_to 'GitHub', @employee.social_network.github_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-                </p>
-              <% end %>
-
-              <% if @employee.social_network.stackoverflow_url.present? %>
-                <p>
-                  <%= link_to 'Stack Overflow', @employee.social_network.stackoverflow_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-                </p>
-              <% end %>
-
-              <% if @employee.social_network.twitter_url.present? %>
-                <p>
-                  <%= link_to 'Twitter', @employee.social_network.twitter_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-                </p>
-              <% end %>
-
-              <% if @employee.social_network.youtube_url.present? %>
-                <p>
-                  <%= link_to 'YouTube', @employee.social_network.youtube_url, target: '_blank', rel: 'noopener', class: "text-danger" %>
-                </p>
-              <% end %>
-            <% else %>
-              <p>No social networks available.</p>
-            <% end %>
           </div>
-        </div>
+        <% end %>  
         <div class="col-md-1">
           <div class="divider">
           </div>
@@ -230,9 +236,11 @@
           <h2 class="text-danger">
             <%= @employee.job_title %>
           </h2>
-          <p>
-            <%= @employee.about %>
-          </p>
+          <% if @employee.about.present? %>
+            <p>
+              <%= @employee.about %>
+            </p>
+          <% end %>  
           <div class="contact-info">
             <div class="row">
               <div class="col-md-6">
@@ -240,11 +248,6 @@
                   <i class="fas fa-envelope">
                   </i>
                   <%= @employee.email %>
-                </p>
-                <p>
-                  <i class="fas fa-map-marker-alt">
-                  </i>
-                  Philadelphia, PA
                 </p>
               </div>
               <div class="col-md-6">
@@ -256,62 +259,66 @@
               </div>
             </div>
           </div>
-          <div class="work-experience mt-4 mb-0">
-            <div class="icon-heading-container mb-3">
-              <div class="diamond">
-                <div class="inner-diamond"></div>
-              </div>
-              <h3 class="section-title">WORK EXPERIENCE</h3>
-            </div>
-            <% @employee.work_experiences.each do |work_experience| %>
-              <div>
-                <h5>
-                  <%= work_experience.job_title %>
-                </h5>
-                <p>
-                  <%= work_experience.role %>
-                </p>
-                <div class="row">
-                  <div class="col-md-6">
-                    <p class="date-location text-danger">
-                      <%= work_experience.job_duration %>
-                    </p>
-                  </div>
-                  <div class="col-md-6">
-                    <p class="date-location text-danger text-end">
-                      <%= work_experience.company_name %>
-                    </p>
-                  </div>
+          <% if @employee.work_experiences.present? %>
+            <div class="work-experience mt-4 mb-0">
+              <div class="icon-heading-container mb-3">
+                <div class="diamond">
+                  <div class="inner-diamond"></div>
                 </div>
-                <ul class="mt-4">
-                  <li>
-                    <%= work_experience.description %>
-                  </li>
-                </ul>
+                <h3 class="section-title">WORK EXPERIENCE</h3>
               </div>
-            <% end %>
-          </div>
-          <div class="education">
-            <div class="icon-heading-container">
-              <div class="diamond">
-                <div class="inner-diamond"></div>
-              </div>
-              <h3 class="section-title">EDUCATION</h3>
+              <% @employee.work_experiences.each do |work_experience| %>
+                <div>
+                  <h5>
+                    <%= work_experience.job_title %>
+                  </h5>
+                  <p>
+                    <%= work_experience.role %>
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="date-location text-danger">
+                        <%= work_experience.job_duration %>
+                      </p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="date-location text-danger text-end">
+                        <%= work_experience.company_name %>
+                      </p>
+                    </div>
+                  </div>
+                  <ul class="mt-4">
+                    <li>
+                      <%= work_experience.description %>
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
             </div>
-            <% @employee.education_records.each do |education_record| %>
-              <div>
-                <h5>
-                  <%= education_record.course_name %>
-                </h5>
-                <p>
-                  <%= education_record.college_or_university %>
-                </p>
-                <p class="date-location">
-                  <%= education_record.start_year %> - <%= education_record.end_year || 'Present' %>
-                </p>
+          <% end %>
+          <% if @employee.education_records.present? %>
+            <div class="education">
+              <div class="icon-heading-container">
+                <div class="diamond">
+                  <div class="inner-diamond"></div>
+                </div>
+                <h3 class="section-title">EDUCATION</h3>
               </div>
-            <% end %>
-          </div>
+              <% @employee.education_records.each do |education_record| %>
+                <div>
+                  <h5>
+                    <%= education_record.course_name %>
+                  </h5>
+                  <p>
+                    <%= education_record.college_or_university %>
+                  </p>
+                  <p class="date-location">
+                    <%= education_record.start_year %> - <%= education_record.end_year || 'Present' %>
+                  </p>
+                </div>
+              <% end %>
+            </div>
+          <% end %>  
         </div>
       </div>
     </div>

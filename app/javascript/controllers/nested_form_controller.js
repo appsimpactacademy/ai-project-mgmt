@@ -14,6 +14,7 @@ export default class extends Controller {
     const template = document.querySelector('#education_template').innerHTML.replace(/NEW_RECORD/g, this.educationIndex);
     document.querySelector('#education_records-list').insertAdjacentHTML('beforeend', template);
     this.educationIndex++;
+    document.querySelector('.alert-education').classList.add('d-none');
   }
 
   removeEducation(event) {
@@ -21,6 +22,7 @@ export default class extends Controller {
     const item = event.target.closest('.education-record');
     item.querySelector("input[name*='_destroy']").value = '1';
     item.style.display = "none"; // Mark for deletion instead of removing
+    document.querySelector('.alert-education').classList.remove('d-none');
   }
 
   addWork(event) {
@@ -28,6 +30,7 @@ export default class extends Controller {
     const template = document.querySelector('#work_template').innerHTML.replace(/NEW_RECORD/g, this.workIndex);
     document.querySelector('#work_experiences-list').insertAdjacentHTML('beforeend', template);
     this.workIndex++;
+    document.querySelector('.alert-work').classList.add('d-none');
   }
 
   removeWork(event) {
@@ -35,6 +38,7 @@ export default class extends Controller {
     const item = event.target.closest('.work-experience');
     item.querySelector("input[name*='_destroy']").value = '1';
     item.style.display = 'none'; // Mark for deletion instead of removing
+    document.querySelector('.alert-work').classList.remove('d-none');
   }
 
 

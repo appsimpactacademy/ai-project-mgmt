@@ -30,8 +30,8 @@ class Employee < ApplicationRecord
   accepts_nested_attributes_for :social_network, allow_destroy: true
 
 
-  validates :first_name, :last_name, :job_title, :profile_image, presence: true
-  validates :about, presence: true, if: :editing_record?
+  validates :first_name, :last_name, :job_title, presence: true
+  validates :about, :profile_image, presence: true, if: :editing_record?
   validates :contact_number, presence: true, uniqueness: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits long" }
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :first_and_last_name_format
