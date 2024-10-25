@@ -8,17 +8,32 @@
 		</div>  
 	</div>
   <div class="row">
-    <% @templates.each do |template| %>
-      <div class="col-md-4">
-        <div class="card shadow text-dark position-relative">
-          <%= image_tag template.template_image, class: 'card-img' %>
-          <div class="card-img-overlay template-overlay d-flex justify-content-center align-items-center">
-            <h5 class="card-title text-center"><%= template.name %></h5>
+    <% if @templates.any? %>
+      <% @templates.each do |template| %>
+        <div class="col-md-4 mt-5">
+          <div class="card shadow text-dark position-relative template-card">
+            <% if template.template_image.attached? %>
+              <%= image_tag template.template_image, class: 'card-img' %>
+            <% else %>
+              <%= image_tag 'unnamed.jpg', class: 'card-img' %>  
+            <% end %>  
+            <div class="card-img-overlay template-overlay d-flex justify-content-center align-items-center">
+              <h5 class="card-title text-center"><%= template.name %></h5><br>
+              <%= link_to edit_admin_template_path(template) do %>
+                <span class="text-danger ms-3"><i class="fa fa-edit"></i></span>
+              <% end %>
+            </div>
           </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-12">
+        <div class="alert alert-warning text-center mt-4">
+          No templates found. Please <%= link_to 'add a template', new_admin_template_path %>.
         </div>
       </div>
     <% end %>
-  </div>		
+  </div>  	
 </div>
 
 <style>
@@ -31,4 +46,9 @@
   .card:hover .template-overlay {
     opacity: 1; /* Show on hover */
   }
+  .template-card, .template-card img {
+    max-height: 400px;
+  }
+
+
 </style>

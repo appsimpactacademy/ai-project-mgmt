@@ -7,7 +7,7 @@
       <h4> Your profile</h4>
     </div>
     <div class="col-md-6 text-end">
-      <%= link_to 'Back to home', root_path, class: 'btn btn-primary' %>
+      <%= link_to 'Back to form', edit_employee_registration_path, class: 'btn btn-primary' %>
     </div>
   </div>
   <div class="card">
@@ -17,7 +17,10 @@
 			  <br><br>
 			  <%= link_to 'Choose Templates', select_template_path, class: 'btn btn-primary' %>
 			</div>
-      <div class="mb-3">
+      <% if @employee.profile_image.attached? %>
+        <%= image_tag @employee.profile_image, class: "w-20" %>
+      <% end %>
+      <div class="mb-3 mt-4">
         <strong>First Name:</strong> <%= @employee.first_name %>
       </div>
       <div class="mb-3">
@@ -56,6 +59,7 @@
 			      <strong>Start Date:</strong> <%= experience.start_date %><br>
 			      <strong>End Date:</strong> <%= experience.end_date.present? ? experience.end_date : 'Currently Working' if experience.is_currently_working_here %><br>
 			      <strong>Description:</strong> <%= experience.description %>
+            <strong>Job Duration:</strong> <%= experience.job_duration %>
 			    </li>
 			  <% end %>
 			</ul>

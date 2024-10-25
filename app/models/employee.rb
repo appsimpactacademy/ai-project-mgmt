@@ -8,6 +8,7 @@ class Employee < ApplicationRecord
          :validatable, 
          :trackable
   
+  has_one_attached :profile_image
   has_many :employee_projects
   has_many :projects, through: :employee_projects
   belongs_to :company, optional: true
@@ -25,36 +26,20 @@ class Employee < ApplicationRecord
   has_many :employee_skills
   has_many :skills, through: :employee_skills
   has_many :resumes, dependent: :destroy  # Add this line
+  has_one :social_network, dependent: :destroy
+  accepts_nested_attributes_for :social_network, allow_destroy: true
 
 
-  validates :first_name, :last_name, :job_title, presence: true
+  validates :first_name, :last_name, :job_title, :profile_image, presence: true
   validates :about, presence: true, if: :editing_record?
   validates :contact_number, presence: true, uniqueness: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits long" }
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validate :first_and_last_name_format
-  validate :validate_associated_objects
 
   before_save :set_default_role
   after_create :send_set_password_email
 
-
-  def validate_associated_objects
-    if work_experiences.blank?
-      errors.add(:work_experiences, "can't be blank")
-    end
-
-    if skills.blank?
-      errors.add(:skills, "can't be blank")
-    end
-
-    if hobbies.blank?
-      errors.add(:hobbies, "can't be blank")
-    end
-
-    if education_records.blank?
-      errors.add(:education_records, "can't be blank")
-    end
-  end
+  # Skip current password validation if only certain attributes are being updated
 
   def editing_record?
     persisted? # Returns true if the record has been saved (i.e., editing)

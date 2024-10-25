@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     get '/preview_template/:id' => 'employees/registrations#preview_template', as: :preview_template
     get '/get_resume/:id' => 'employees/registrations#get_resume', as: :get_resume
   end
+  namespace :employees do
+    resources :profiles, only: [:show, :update]
+  end
+  
   namespace :admin do 
     resources :projects
     resources :employees

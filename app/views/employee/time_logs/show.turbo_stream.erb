@@ -1,0 +1,22 @@
+<%= turbo_stream.replace "remote_modal" do %>
+  <%= turbo_frame_tag :remote_modal, target: :_top do %>
+    <div class="modal fade" id="bsTurboModal" tabindex="-1" aria-labelledby="bsTurboModalLabel" aria-hidden="true" data-controller="bs-modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bsTurboModalLabel">Time Log Detail</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="lead"><strong>Title: </strong><%= @time_log.log_date %></p>
+            <p class="lead"><strong>Employee: </strong><%= @time_log.employee_project.project.title %></p>
+            <p class="lead"><strong>Task: </strong><%= "#{@time_log.time_in_hours} hours"%></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

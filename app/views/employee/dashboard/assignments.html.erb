@@ -19,40 +19,53 @@
   </div>
 <% end %>
 <%= render 'shared/export_modal', export_path: employee_export_time_logs_path('PLACEHOLDER', format: :csv), modal_title: 'Export Options' %>
-
-<div class="card mt-5">
+<div class="card mt-5" id="chartContainer" style="display: none;">
   <div class="card-body">
     <canvas id="myChart" style="width:100%;min-width:600px"></canvas>
   </div>
 </div>
 
+<div class="alert alert-warning" id="noDataMessage" style="display: none;">
+  No data available to display the chart.
+</div>
 
 <script>
-  var xValues = []
+  var xValues = [];
   var yValues = [];
+  
   <% @employee_projects.each do |ep| %>
-    xValues.push("<%= ep.project.title %>")
-    yValues.push(<%= ep.time_logs.pluck(:time_in_hours).sum %>)
+    xValues.push("<%= ep.project.title %>");
+    yValues.push(<%= ep.time_logs.pluck(:time_in_hours).sum %>);
   <% end %>
+  
   var barColors = [
     "#b91d47",
     "#00aba9"
   ];
 
-  new Chart("myChart", {
-    type: "pie",
-    data: {
-      labels: xValues,
-      datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: "Your work time allocation project wise"
+  // Check if there's data to display
+  if (xValues.length > 0 && yValues.length > 0) {
+    // Show the chart container
+    document.getElementById('chartContainer').style.display = 'block';
+
+    new Chart("myChart", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Your work time allocation project wise"
+        }
       }
-    }
-  });
+    });
+  } else {
+    // Show the no data message
+    document.getElementById('noDataMessage').style.display = 'block';
+  }
 </script>

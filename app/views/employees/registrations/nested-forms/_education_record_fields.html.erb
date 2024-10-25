@@ -1,35 +1,73 @@
 <div class="education-record mb-3 border p-3 rounded">
+
+  <% if f.object.errors[:base].any? %>
+    <div class="alert alert-danger">
+      <%= f.object.errors[:base].join(', ') %>
+    </div>
+  <% end %>
   <%= f.hidden_field :_destroy, class: 'hidden-destroy' %>
   <div class="mb-3">
     <%= f.label :course_name, class: "form-label" %>
     <%= f.text_field :course_name, class: "form-control" %>
+    <% if f.object.errors[:course_name].any? %>
+      <div class="text-danger mt-3">
+        <%= f.object.errors[:course_name].join(', ') %>
+      </div>
+    <% end %>
   </div>
+
   <div class="mb-3">
     <%= f.label :college_or_university, class: "form-label" %>
     <%= f.text_field :college_or_university, class: "form-control" %>
+    <% if f.object.errors[:college_or_university].any? %>
+      <div class="text-danger mt-3">
+        <%= f.object.errors[:college_or_university].join(', ') %>
+      </div>
+    <% end %>
   </div>
+
   <div class="mb-3">
     <%= f.label :start_year, class: "form-label" %>
     <%= f.text_field :start_year, 
                      class: "form-control", 
                      placeholder: "YYYY",
                      maxlength: 4, oninput: "this.value = this.value.replace(/[^0-9]/g, '')" %>
+    <% if f.object.errors[:start_year].any? %>
+      <div class="text-danger mt-3">
+        <%= f.object.errors[:start_year].join(', ') %>
+      </div>
+    <% end %>
   </div>
+
   <div class="mb-3" data-nested-form-target='endYear'>
     <%= f.label :end_year, class: "form-label" %>
     <%= f.text_field :end_year, 
                      class: "form-control", 
                      placeholder: "YYYY",
-                     maxlength: 4, oninput: "this.value = this.value.replace(/[^0-9]/g, '')" %>
-  </div>                   
+                     maxlength: 4, oninput: "this.value = this.value.replace(/[^0-9]/g, '')", 
+                     disabled: f.object.is_pursuing? ? true : false,
+                     value: f.object.is_pursuing? ? nil : f.object.end_year %>
+    <% if f.object.errors[:end_year].any? %>
+      <div class="text-danger mt-3">
+        <%= f.object.errors[:end_year].join(', ') %>
+      </div>
+    <% end %>
+  </div> 
+
   <div class="mb-3">
     <%= f.label :marks, class: "form-label" %>
     <%= f.number_field :marks, class: "form-control", min: 0, step: 1, oninput: "this.value = Math.abs(this.value)" %>
+    <% if f.object.errors[:marks].any? %>
+      <div class="text-danger mt-3">
+        <%= f.object.errors[:marks].join(', ') %>
+      </div>
+    <% end %>
   </div>
   <div class="mb-3">
     <%= f.label :is_pursuing, class: "form-label" %>
-    <%= f.check_box :is_pursuing, data: {action: 'click->nested-form#isPursuingCheked'} %>
+    <%= f.check_box :is_pursuing, data: {action: 'change->nested-form#isPursuingChecked', nested_form_target: 'isPursuingCheckbox'} %>
   </div>
+
   <div class="d-flex justify-content-between">
     <%= link_to 'Remove Education', '#', class: 'btn btn-danger btn-sm', data: { action: 'click->nested-form#removeEducation' } %>
   </div>

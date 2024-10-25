@@ -10,3 +10,4 @@ pin "flatpickr" # @4.6.13
 pin "rangePlugin", to: "https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/rangePlugin.js"
 pin "chart.js", to: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"
 pin "@kurkle/color", to: "@kurkle--color.js" # @0.3.2
+pin "sweetalert2" # @11.14.4

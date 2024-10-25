@@ -6,7 +6,11 @@
         <p class="mt-4"><%= template.description || 'No description available' %></p>
       </div>
       <div class="p-5 template-image">
-        <%= image_tag template.template_image, class: 'card-img-right', alt: "#{template.name} Image" %>
+        <% if template.template_image.attached? %>
+          <%= image_tag template.template_image, class: 'card-img-right', alt: "#{template.name} Image" %>
+        <% else %>
+          <%= image_tag 'unnamed.jpg', class: 'card-img-right' %>  
+        <% end %>  
         <div class="overlay">
           <div class="preview-button">
             <%= link_to 'Preview', preview_template_path(template), target: '_blank', class: 'overlay', data: { toggle: 'tooltip', placement: 'top', title: 'View Full Image' } %>

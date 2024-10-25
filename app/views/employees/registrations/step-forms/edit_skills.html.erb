@@ -1,0 +1,40 @@
+<%= turbo_frame_tag "step_form" do %>
+  <div class="container">
+  	<div class="card">
+	  	<div class="card-body">
+	  		<h4>Your Skills</h4>
+			  <%= form_for(resource, as: resource_name, url: registration_path(resource_name, step: 'final'), html: { method: :put, data: { turbo: false } }) do |f| %>
+			    <% if resource.errors.any? %>
+				    <div class="alert alert-danger">
+				      <ul>
+				        <% resource.errors.full_messages.each do |msg| %>
+				          <li><%= msg %></li>
+				        <% end %>
+				      </ul>
+				    </div>
+				  <% end %>
+			    <div class="mt-3">
+					  <div class="d-flex flex-wrap">
+					    <%= f.collection_check_boxes :skill_ids, Skill.all, :id, :name do |b| %>
+					      <div class="form-check me-3 mb-2">
+					        <%= b.check_box(class: 'form-check-input') %>
+					        <%= b.label(class: 'form-check-label') %>
+					      </div>
+					    <% end %>
+					  </div>
+					</div>
+			    <div class="d-flex">
+						<div>
+							<% if @previous_step %>
+							  <%= link_to 'Previous', edit_employee_registration_path(step: @previous_step), class: 'btn btn-secondary', data: { turbo: false } %>
+							<% end %>
+		    		</div>
+			    	<div class="ms-3">
+			        <%= f.submit "Finish", class: "btn btn-primary" %>
+			    	</div>
+			    </div>
+			  <% end %>
+			</div>
+		</div>	  
+	</div>  
+<% end %>
