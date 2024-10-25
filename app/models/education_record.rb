@@ -3,7 +3,7 @@ class EducationRecord < ApplicationRecord
 
   before_validation :set_end_year
 
-  validates :course_name, presence: true, uniqueness: true
+  validate :unique_company_name_for_employee
   validates :start_year, presence: true
   validates :marks, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
   validates :college_or_university, presence: true
@@ -15,6 +15,12 @@ class EducationRecord < ApplicationRecord
 
   def set_end_year
     self.end_year = nil if is_pursuing && end_year.present?
+  end
+  
+  def unique_company_name_for_employee
+    if employee.education_records.where(course_name: course_name).where.not(id: id).exists?
+      errors.add(:course_name, "already exists for this employee")
+    end
   end
 
   def presence_of_end_year

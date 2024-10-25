@@ -8,14 +8,20 @@ class Employees::RegistrationsController < Devise::RegistrationsController
   before_action :load_steps, only: [:edit, :update]
   before_action :set_step, only: [:edit, :update]
   before_action :build_social_network, only: [:edit, :update] # Or your relevant action
+  before_action :set_employee, only: [:employee_detail, :preview_template, :get_resume]
 
   def edit
+    if request.referer
+      referer_url = URI.parse(request.referer)
+      @previous_path = referer_url.path
+    end
     render_step
   end
 
   # PUT /resource
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+
     if update_resource(resource, account_update_params)
       set_flash_message :notice, :updated if is_navigational_format?
       bypass_sign_in resource, scope: resource_name
@@ -24,7 +30,7 @@ class Employees::RegistrationsController < Devise::RegistrationsController
       else
         @next_step_path = next_step
         if @next_step_path.present?
-          redirect_to @next_step_path, locals: {step: @step}
+          redirect_to @next_step_path, locals: { step: @step }
         else
           redirect_to employee_detail_path(resource.id), notice: 'Employee Details updated.'
         end
@@ -36,8 +42,12 @@ class Employees::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+
   def employee_detail
-    @employee = Employee.find(params[:id])
+    if params[:id].to_i != current_employee.id
+      flash[:alert] = "You are not authorized to view this profile."
+      redirect_to root_path # Redirect to a safe path
+    end
   end
 
   def select_template
@@ -51,13 +61,11 @@ class Employees::RegistrationsController < Devise::RegistrationsController
   end
 
   def preview_template
-    @employee = current_employee
     @template_identifier = @template.name.downcase
     # render partial: "templates/#{@template_identifier}", locals: { employee: @employee }, layout: false
   end
 
   def get_resume
-    @employee = current_employee
     @template_identifier = @template.name.downcase
 
     respond_to do |format|
@@ -93,7 +101,7 @@ class Employees::RegistrationsController < Devise::RegistrationsController
   def build_social_network
     resource.build_social_network unless resource.social_network
   end
-  
+
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :email, :contact_number, :job_title])
   end
@@ -163,7 +171,10 @@ class Employees::RegistrationsController < Devise::RegistrationsController
 
     render step_paths[@step] || step_paths['profile']
   end
-
+  
+  def set_employee
+    @employee = current_employee
+  end
 
   def next_step
     next_step = @steps[@steps.index(@step) + 1]

@@ -2,6 +2,9 @@
   <% unless request.format.pdf? %>
     <%= link_to 'Download PDF', get_resume_path(@employee, id: @template.id, format: :pdf), class: 'btn btn-primary' %>
   <% end %>
+  <%= link_to employee_detail_path(current_employee), class: 'btn btn-primary' do %>
+    <i class="fa fa-arrow-left me-2"></i>Detail Page
+  <% end %>
 </div>
 <hr class="hr">
 <div id='pdf'>

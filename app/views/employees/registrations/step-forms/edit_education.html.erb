@@ -1,6 +1,7 @@
 <%= turbo_frame_tag "step_form" do %>
   <div class="container">
 	  <%= form_for(resource, as: resource_name, url: registration_path(resource_name, step: @step), html: { method: :put, data: { controller: "url-update", turbo_frame: "step_form" } }) do |f| %>
+      <%= hidden_field_tag :previous_path, @previous_path %>
 		  <div class="card">
 		  	<div class="card-body">
 		  		<h4>Education Records</h4>

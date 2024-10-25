@@ -5,7 +5,7 @@ class WorkExperience < ApplicationRecord
   # Validations
   validates :job_title, length: { maximum: 100 }
   validates :role, presence: true
-  validates :company_name, presence: true, uniqueness: true
+  validate :unique_company_name_for_employee
   validates :description, presence: true, unless: :is_currently_working_here?
   validates :start_date, presence: true
   validates :is_currently_working_here, inclusion: { in: [true, false] }
@@ -31,6 +31,12 @@ class WorkExperience < ApplicationRecord
   end
   
   private
+
+  def unique_company_name_for_employee
+    if employee.work_experiences.where(company_name: company_name).where.not(id: id).exists?
+      errors.add(:company_name, "already exists for this employee")
+    end
+  end
 
   def clear_end_date_if_currently_working
     self.end_date = nil if is_currently_working_here == true

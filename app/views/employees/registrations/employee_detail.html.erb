@@ -35,9 +35,9 @@
       <div class="mb-3">
         <strong>Job Title:</strong> <%= @employee.job_title %>
       </div>
-
+      <hr>
+      <h5 class="mt-4">Education Records</h5>
       <% if @employee.education_records.present? %>
-        <h5 class="mt-4">Education Records</h5>
         <ul class="list-group">
   			  <% @employee.education_records.each do |education| %>
   			    <li class="list-group-item">
@@ -50,9 +50,19 @@
   			    </li>
   			  <% end %>
 			  </ul>
-      <% end %>  
+      <% else %>
+        <div class="row">
+          <div class="col-md-6">
+            <p>There is no education records added by you if you need to add you can click on the Add button.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <%= link_to 'Edit Education', edit_employee_registration_path(step: 'education'), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      <% end %>
+      <hr>
+      <h5 class="mt-4">Work Experience</h5>
       <% if @employee.work_experiences.present? %>
-        <h5 class="mt-4">Work Experience</h5>
         <ul class="list-group">
   			  <% @employee.work_experiences.each do |experience| %>
   			    <li class="list-group-item">
@@ -66,25 +76,55 @@
   			    </li>
   			  <% end %>
 			  </ul>
-      <% end %>  
+      <% else %>
+        <div class="row">
+          <div class="col-md-6">
+            <p>There is no work experieces added by you if you need to add you can click on the Add button.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <%= link_to 'Edit Work', edit_employee_registration_path(step: 'work'), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      <% end %>
+      <hr>
+      <h5 class="mt-4">Hobbies</h5>
       <% if @employee.hobbies.present? %>
-        <h5 class="mt-4">Hobbies</h5>
         <ul class="list-group">
           <% @employee.hobbies.each do |hobby| %>
-           <%= hobby.name %>
+           <%= hobby.name %><br>
           <% end %>
         </ul>
+      <% else %>
+        <div class="row">
+          <div class="col-md-6">
+            <p>There is no hobbies added by you if you need to add you can click on the Add button.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <%= link_to 'Edit Hobby', edit_employee_registration_path(step: 'hobby'), class: 'btn btn-primary' %>
+          </div>
+        </div>
       <% end %>
+      <hr>
+      <h5 class="mt-4">Skills</h5>
       <% if @employee.skills.present? %>
-        <h5 class="mt-4">Skills</h5>
         <ul class="list-group">
           <% @employee.skills.each do |skill| %>
-            <%= @employee.hobbies.map(&:name).join(', ') %>
+            <%= skill.name %>,
           <% end %>
         </ul>
-      <% end %> 
+      <% else %>
+        <div class="row">
+          <div class="col-md-6">
+            <p>There is no skills added by you if you need to add you can click on the Add button.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <%= link_to 'Edit Skill', edit_employee_registration_path(step: 'skill'), class: 'btn btn-primary' %>
+          </div>
+        </div> 
+      <% end %>
+      <hr>
+      <h5 class="mt-4">Social Networks</h5>
       <% if @employee.social_network&.attributes.except("id", "employee_id", "created_at", "updated_at").values.any?(&:present?) %>
-        <h5 class="mt-4">Social Networks</h5>
         <ul class="list-group mx-3">
           <% if @employee.social_network.linkedin_url.present? %>
             <li>
@@ -116,6 +156,15 @@
             </li>
           <% end %>
         </ul>
+      <% else %>
+        <div class="row">
+          <div class="col-md-6">
+            <p>There is no social networks added by you if you need to add you can click on the Add button.</p>
+          </div>
+          <div class="col-md-6 text-end">
+            <%= link_to 'Edit social network', edit_employee_registration_path(step: 'social_network'), class: 'btn btn-primary' %>
+          </div>
+        </div>
       <% end %> 
     </div>
   </div>

@@ -5,7 +5,9 @@
         <h4>Template Preview</h4>
       </div>
       <div class="col-md-6 text-end">
-        <%= link_to 'Back to home', root_path, class: 'btn btn-primary' %>
+        <%= link_to employee_detail_path(current_employee), class: 'btn btn-primary' do %>
+          <i class="fa fa-arrow-left me-2"></i>Detail Page
+        <% end %>
       </div>
     </div>
     <div class="card mt-3 mb-3">
