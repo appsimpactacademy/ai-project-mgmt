@@ -1,0 +1,35 @@
+<%= form_with(model: [:admin, @template], local: true) do |form| %>
+  <% if @template.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+      <ul>
+        <% @template.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 10 %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :template_image, class: "form-label" %>
+    <%= form.file_field :template_image, class: "form-control" %>
+    <% if @template.template_image.attached? %>
+      <div class="mt-2">
+        <strong>Current Image:</strong>
+        <%= image_tag @template.template_image, class: "img-fluid mt-2" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit 'Save Template', class: "btn btn-primary" %>
+  </div>
+<% end %>

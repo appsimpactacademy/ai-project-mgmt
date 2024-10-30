@@ -1,0 +1,23 @@
+<div class="download-template text-end me-5">
+  <% unless request.format.pdf? %>
+    <%= link_to 'Download PDF', get_resume_path(@employee, id: @template.id, format: :pdf), class: 'btn btn-primary' %>
+  <% end %>
+</div>
+<hr class="hr">
+<div id='pdf'>
+  <div class="container">
+    <%= render partial: "templates/#{@template_identifier}", locals: { employee: @employee } %>
+  </div>  
+</div>
+<style>
+  @media print {
+    .download-template, .hr {
+      display: none; /* Hide download button in PDF */
+    }
+    /* Add any additional styles to enhance PDF appearance */
+    body {
+      font-size: 12pt; /* Adjust font size for PDF */
+      background-color: #fff !important;
+    }
+  }
+</style>

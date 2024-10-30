@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <title> Rachel Johnson - HR Professional </title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
+    <style>
+      body {
+          font-family: 'Roboto', sans-serif;
+          background-color: #f4f4f4;
+          color: #333;
+        }
+        .container {
+          max-width: 900px;
+          margin: 20px auto;
+          background: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: none;
+        }
+        .header {
+          background-color: #2c3e50;
+          color: white;
+          padding: 20px;
+          border-radius: 10px;
+          position: relative;
+        }
+        .header h1 {
+          font-size: 2em;
+          margin: 0;
+        }
+        .header h2 {
+          font-size: 1.2em;
+          font-weight: 400;
+          margin: 5px 0 20px;
+        }
+        .header .contact-info {
+          text-align: right;
+        }
+        .header .contact-info p {
+          margin: 0;
+        }
+        .header .profile-pic {
+          border-radius: 50%;
+          border: 5px solid #2c3e50;
+          margin: 0 auto;
+          display: block;
+          position: absolute;
+          bottom: -50px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        .section-title {
+          font-size: 1.5em;
+          margin-top: 60px;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+        }
+        .section-title i {
+          margin-right: 10px;
+        }
+        .skills .badge {
+          background-color: #e0e0e0;
+          color: #333;
+          margin: 5px;
+          padding: 10px;
+          border-radius: 5px;
+        }
+        .education, .languages {
+          margin-bottom: 20px;
+        }
+        .languages p {
+          margin: 0;
+        }
+        .ribbon {
+          position: relative;
+          background: #e0e0e0;
+          color: #333;
+          padding: 10px 15px;
+          margin: 5px;
+          display: inline-block;
+          border-radius: 5px;
+        }
+        .ribbon:before, .ribbon:after {
+          content: '';
+          position: absolute;
+          display: block;
+          border: 5px solid #e0e0e0;
+        }
+        .ribbon:before {
+          top: 100%;
+          left: 0;
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+        }
+        .ribbon:after {
+          top: 100%;
+          right: 0;
+          border-right-color: transparent;
+          border-bottom-color: transparent;
+        }
+        .header-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .header-content .left, .header-content .right {
+          flex: 1;
+        }
+        .header-content .center {
+          flex: 0 0 150px;
+          text-align: center;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <div class="left">
+            <h1><%= @employee.full_name %></h1>
+            <h2><%= @employee.job_title %></h2>
+            <p><%= @employee.about %></p>
+          </div>
+          <div class="right">
+            <div class="contact-info">
+              <p> <i class="fas fa-envelope"></i> <%= @employee.email %> </p>
+              <p> <i class="fas fa-phone"> </i> <%= @employee.contact_number %> </p>
+              <% if @employee.social_network %>
+                <% if @employee.social_network.linkedin_url.present? %>
+                  <p>
+                    <%= link_to "#{@employee.social_network.linkedin_url}", @employee.social_network.linkedin_url, target: '_blank', rel: 'noopener', class: "text-white" %>
+                  </p>
+                <% end %>
+                
+                <% if @employee.social_network.github_url.present? %>
+                  <p>
+                    <%= link_to 'GitHub', @employee.social_network.github_url, target: '_blank', rel: 'noopener', class: "text-white" %>
+                  </p>
+                <% end %>
+
+                <% if @employee.social_network.stackoverflow_url.present? %>
+                  <p>
+                    <%= link_to 'Stack Overflow', @employee.social_network.stackoverflow_url, target: '_blank', rel: 'noopener', class: "text-white" %>
+                  </p>
+                <% end %>
+
+                <% if @employee.social_network.twitter_url.present? %>
+                  <p>
+                    <%= link_to 'Twitter', @employee.social_network.twitter_url, target: '_blank', rel: 'noopener', class: "text-white" %>
+                  </p>
+                <% end %>
+
+                <% if @employee.social_network.youtube_url.present? %>
+                  <p>
+                    <%= link_to 'YouTube', @employee.social_network.youtube_url, target: '_blank', rel: 'noopener', class: "text-white" %>
+                  </p>
+                <% end %>
+              <% else %>
+                <p>No social networks available.</p>
+              <% end %>
+            </div>
+          </div>
+        </div> 
+        <% if @employee.profile_image.attached? %>
+          <%= image_tag @employee.profile_image, height: 100, width: 100, class: 'profile-pic' %>
+        <% else %>
+          <%= image_tag 'unnamed.jpg', height: 100, width: 100, class: 'profile-pic' %>
+        <% end %>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <div class="work-experience">
+            <h3 class="section-title"> <i class="fas fa-briefcase"> </i> WORK EXPERIENCE </h3>
+            <% @employee.work_experiences.each do |work_exp| %>
+              <div class="mt-4">
+                <h4> <%= work_exp.job_title %> </h4>
+                <p> <strong> <%= work_exp.company_name %> </strong> <span class="text-muted"> <%= work_exp.job_duration %> </span> <span class="text-muted"> Test Address </span> </p>
+                <%= work_exp.description %>
+              </div>  
+            <% end %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="skills">
+            <h3 class="section-title"> <i class="fas fa-cogs"> </i> SKILLS &amp; COMPETENCIES </h3>
+            <% @employee.skills.each do |skill| %>
+              <span class="ribbon"> <%= skill.name %> </span>
+            <% end %>
+          </div>
+          <% if @employee.projects.present? %>
+            <div class="projects">
+              <h3 class="section-title">
+               <i class="fas fa-project-diagram">
+               </i>
+               PROJECTS
+              </h3>
+              <% @employee.projects.each do |project| %>
+                <p>
+                  <strong>
+                    <%= project.title %>
+                  </strong>
+                  <br/>
+                  <%= project.status %>
+                </p>
+              <% end %>
+            </div>
+          <% end  %>
+          <div class="education">
+            <h3 class="section-title"> <i class="fas fa-graduation-cap"> </i> EDUCATION </h3>
+            <% @employee.education_records.each do |education| %>
+              <p> <strong><%= education.course_name %></strong> <br /> <%= education.college_or_university %> <br /> <%= education.start_year || 'Start year not available' %> - <%= education.end_year || 'Present' %> </p>
+            <% end %>
+          </div>
+          <div class="hobbies">
+            <h3 class="section-title">
+              <i class="fas fa-heart">
+              </i>
+              HOBBIES
+            </h3>
+            <p>
+              <%= @employee.hobbies.any? ? @employee.hobbies.map(&:name).join(', ') : 'No interests available' %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

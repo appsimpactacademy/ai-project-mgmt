@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "template-card" do %>
+  <%= turbo_frame_tag 'template-card' do %>
+    <%= render partial:  'template_cards', locals: {templates: @templates} %>
+  <% end %>  
+<% end %>

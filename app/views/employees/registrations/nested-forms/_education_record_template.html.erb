@@ -1,0 +1,49 @@
+<template id="education_template">
+  <div class="nested-fields education-record mb-3 border p-3 rounded">
+    <%= hidden_field_tag 'employee[education_records_attributes][NEW_RECORD][_destroy]', nil, class: 'hidden-destroy' %>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][course_name]', 'Course Name', class: 'form-label' %>
+      <%= text_field_tag 'employee[education_records_attributes][NEW_RECORD][course_name]', nil, class: 'form-control' %>
+      <div class="text-danger" id="error_course_name_NEW_RECORD"></div> <!-- Placeholder for error message -->
+    </div>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][college_or_university]', 'College or University', class: 'form-label' %>
+      <%= text_field_tag 'employee[education_records_attributes][NEW_RECORD][college_or_university]', nil, class: 'form-control' %>
+      <div class="text-danger" id="error_college_or_university_NEW_RECORD"></div> <!-- Placeholder for error message -->
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][start_year]', 'Start Year', class: 'form-label' %>
+      <%= text_field_tag 'employee[education_records_attributes][NEW_RECORD][start_year]', nil, 
+          class: 'form-control', 
+          placeholder: 'YYYY',
+          maxlength: 4, oninput: "this.value = this.value.replace(/[^0-9]/g, '')" %>
+      <div class="text-danger" id="error_start_year_NEW_RECORD"></div> <!-- Placeholder for error message -->
+    </div>
+
+    <div class="mb-3" data-nested-form-target='endYear'>
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][end_year]', 'End Year', class: 'form-label' %>
+      <%= text_field_tag 'employee[education_records_attributes][NEW_RECORD][end_year]', nil, 
+          class: 'form-control', 
+          placeholder: 'YYYY',
+          maxlength: 4, oninput: "this.value = this.value.replace(/[^0-9]/g, '')" %>
+      <div class="text-danger" id="error_end_year_NEW_RECORD"></div> <!-- Placeholder for error message -->
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][marks]', 'Marks', class: 'form-label' %>
+      <%= number_field_tag 'employee[education_records_attributes][NEW_RECORD][marks]', nil, class: 'form-control', min: 0, step: 1, oninput: "this.value = Math.abs(this.value)" %>
+      <div class="text-danger" id="error_marks_NEW_RECORD"></div> <!-- Placeholder for error message -->
+    </div>
+    <div class="mb-3">
+      <%= label_tag 'employee[education_records_attributes][NEW_RECORD][is_pursuing]', 'Is Pursuing', class: 'form-label' %>
+      <%= check_box_tag 'employee[education_records_attributes][NEW_RECORD][is_pursuing]', '1', false, class: 'form-check-input', data: {action: 'click->nested-form#isPursuingChecked', nested_form_target: 'isPursuingCheckbox'} %>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Remove Education Record', '#', class: 'btn btn-danger btn-sm', data: { action: 'click->nested-form#removeEducation' } %>
+    </div>
+  </div>
+</template>

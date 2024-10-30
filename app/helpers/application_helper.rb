@@ -6,4 +6,11 @@ module ApplicationHelper
     when :alert then 'alert alert-danger' 
     end
   end
+
+  def employee_basic_details?(employee)
+    employee.first_name.present? && 
+    employee.last_name.present? && 
+    employee.contact_number.present? && 
+    employee.email.present?
+  end
 end

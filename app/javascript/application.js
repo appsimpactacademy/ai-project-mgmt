@@ -3,3 +3,5 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import * as bootstrap from "bootstrap"
 import 'chart.js'
+import Swal from 'sweetalert2';
+window.Swal = Swal;

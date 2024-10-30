@@ -6,14 +6,25 @@ Rails.application.routes.draw do
     passwords: 'employees/passwords',
     confirmations: 'employees/confirmations'
   }
+  devise_scope :employee do 
+    get '/employee_detail/:id' => 'employees/registrations#employee_detail', as: :employee_detail
+    get '/select_template' => 'employees/registrations#select_template', as: :select_template
+    get '/preview_template/:id' => 'employees/registrations#preview_template', as: :preview_template
+    get '/get_resume/:id' => 'employees/registrations#get_resume', as: :get_resume
+  end
+  namespace :employees do
+    resources :profiles, only: [:show, :update]
+  end
+  
   namespace :admin do 
     resources :projects
     resources :employees
     resources :employee_projects
     resources :skills
+    resources :templates
   end
 
-  namespace :employee do 
+  namespace :employee do
     get 'dashboard' => 'dashboard#index'
     get 'assignments' => 'dashboard#assignments'
     get 'dashboard/export_time_logs/:id', to: 'dashboard#export_time_logs', as: :export_time_logs

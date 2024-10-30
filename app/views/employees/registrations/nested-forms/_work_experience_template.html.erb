@@ -1,0 +1,69 @@
+<% unique_id = "error_NEW_RECORD" %>
+
+<template id="work_template">
+  <div class="nested-fields work-experience mb-3 border p-3 rounded">
+    <%= hidden_field_tag 'employee[work_experiences_attributes][NEW_RECORD][_destroy]', nil, class: 'hidden-destroy' %>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][job_title]', 'Job Title', class: 'form-label' %>
+      <%= text_field_tag 'employee[work_experiences_attributes][NEW_RECORD][job_title]', nil, class: 'form-control' %>
+      <% if @employee.errors[:work_experiences].any? %>
+        <div class="text-danger">
+          <%= @employee.errors[:work_experiences].join(', ') %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][role]', 'Role', class: 'form-label' %>
+      <%= text_field_tag 'employee[work_experiences_attributes][NEW_RECORD][role]', nil, class: 'form-control' %>
+      <% if @employee.errors[:work_experiences].any? %>
+        <div class="text-danger">
+          <%= @employee.errors[:work_experiences].join(', ') %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][description]', 'Description', class: 'form-label' %>
+      <%= text_area_tag 'employee[work_experiences_attributes][NEW_RECORD][description]', nil, class: 'form-control', maxlength: 150 %>
+      <% if @employee.errors[:work_experiences].any? %>
+        <div class="text-danger">
+          <%= @employee.errors[:work_experiences].join(', ') %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][company_name]', 'Company Name', class: 'form-label' %>
+      <%= text_field_tag 'employee[work_experiences_attributes][NEW_RECORD][company_name]', nil, class: 'form-control' %>
+      <% if @employee.errors[:work_experiences].any? %>
+        <div class="text-danger">
+          <%= @employee.errors[:work_experiences].join(', ') %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-lg-12 mt-4">
+        <div class="form-check form-switch">
+           <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][is_currently_working_here]', 'Currently Working Here', class: 'form-label' %>
+           <%= check_box_tag 'employee[work_experiences_attributes][NEW_RECORD][is_currently_working_here]', '1', false, class: 'form-check-input', data: {action: 'change->nested-form#isWorkingChecked', nested_form_target: 'isCurrentlyWorkingCheckbox'} %>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][start_date]', 'Start Date', class: 'form-label' %>
+        <%= date_field_tag 'employee[work_experiences_attributes][NEW_RECORD][start_date]', nil, class: 'form-control', max: Date.today %>
+      </div>
+
+      <div class="col-lg-6">
+        <%= label_tag 'employee[work_experiences_attributes][NEW_RECORD][end_date]', 'End Date', class: 'form-label' %>
+        <%= date_field_tag 'employee[work_experiences_attributes][NEW_RECORD][end_date]', nil, class: 'form-control', data: { nested_form_target: "endDate" }, max: Date.today.to_s %>
+      </div>
+    </div>
+  
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Remove Work Experience', '#', class: 'btn btn-danger btn-sm mt-3', data: { action: 'click->nested-form#removeWork' } %>
+    </div>
+  </div>
+</template>

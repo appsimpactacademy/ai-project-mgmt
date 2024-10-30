@@ -1,8 +1,10 @@
 class Employee::TimeLogsController < EmployeeController
-  before_action :set_time_log, only: %i[update]
+  before_action :set_time_log, only: %i[update show]
   def new
     @time_log = current_employee.time_logs.new
   end
+
+  def show;end
 
   def edit
     @time_log = current_employee.time_logs.find(params[:id])

@@ -1,0 +1,67 @@
+<%= turbo_frame_tag "step_form" do %>
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <h4>Complete your profile</h4>
+      </div>
+      <div class="col-md-6 text-end">
+        <%= link_to 'Back to home', root_path, class: 'btn btn-primary', data: { turbo: false } %>
+      </div>
+    </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name, step: @step), html: { method: :put, data: { controller: "url-update", turbo_frame: "step_form" } }) do |f| %>
+       <!-- Display Social Network Errors -->
+        <% if f.object.social_network.errors.any? %>
+          <div class="alert alert-danger">
+            <ul>
+              <% f.object.social_network.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="mb-4">Social Networks</h4>
+
+          <%= f.fields_for :social_network do |social| %>
+            <div class="mb-3">
+              <%= social.label :linkedin_url %>
+              <%= social.text_field :linkedin_url, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= social.label :github_url %>
+              <%= social.text_field :github_url, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= social.label :stackoverflow_url %>
+              <%= social.text_field :stackoverflow_url, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= social.label :twitter_url %>
+              <%= social.text_field :twitter_url, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= social.label :youtube_url %>
+              <%= social.text_field :youtube_url, class: "form-control" %>
+            </div>
+          <% end %>
+
+          <div class="d-flex">
+						<div>
+							<% if @previous_step %>
+							  <%= link_to 'Previous', edit_employee_registration_path(step: @previous_step), class: 'btn btn-secondary', data: { turbo: false } %>
+							<% end %>
+		    		</div>
+			    	<div class="ms-3">
+			        <%= f.submit "Next", class: "btn btn-primary" %>
+			    	</div>
+			    </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

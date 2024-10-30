@@ -14,27 +14,6 @@ Company.create!(
   domain: "xyzcorp.com"
 )
 
-# Seed data for Employees
-Employee.create!(
-  first_name: "John",
-  last_name: "Doe",
-  email: "john.doe@example.com",
-  contact_number: "+11234567890",
-  job_title: "Developer",
-  company_id: 1,
-  password: "111111"
-)
-
-Employee.create!(
-  first_name: "Jane",
-  last_name: "Smith",
-  email: "jane.smith@example.com",
-  contact_number: "+19876543210",
-  job_title: "Designer",
-  company_id: 2,
-  password: "111111"
-)
-
 # Seed data for Projects
 Project.create!(
   title: "Website Redesign",
@@ -56,14 +35,66 @@ Project.create!(
   company_id: 2
 )
 
-# Seed data for Skills
-Skill.create!(
-  name: "Ruby on Rails"
+# Create skills, hobbies, education records, and work experiences to associate with the employee
+skills = [
+  Skill.create!(name: 'Ruby on Rails'),
+  Skill.create!(name: 'JavaScript'),
+  Skill.create!(name: 'Project Management')
+]
+
+hobbies = [
+  Hobby.create!(name: 'Reading'),
+  Hobby.create!(name: 'Hiking')
+]
+
+# Seed data for Employees
+Employee.create!(
+  first_name: "John",
+  last_name: "Doe",
+  email: "john.doe@example.com",
+  contact_number: "9867895645",
+  job_title: "Developer",
+  company_id: 1,
+  password: "111111",
 )
 
-Skill.create!(
-  name: "React.js"
+Employee.create!(
+  first_name: "Jane",
+  last_name: "Smith",
+  email: "jane.smith@example.com",
+  contact_number: "9087654323",
+  job_title: "Designer",
+  company_id: 2,
+  password: "111111",
 )
+
+work_experiences = [
+  WorkExperience.create!(
+    job_title: 'Software Developer',
+    company_name: 'ABC Ltd',
+    start_date: '2018-01-01',
+    end_date: '2020-01-01',
+    employee_id: 1,
+    role: 'Developer',
+    description: 'Worked on building web applications using Ruby on Rails, contributed to backend and frontend development.'
+  ),
+  WorkExperience.create!(
+    job_title: 'Project Manager',
+    company_name: 'XYZ Corp',
+    start_date: '2020-02-01',
+    end_date: '2023-01-01',
+    employee_id: 1,
+    role: 'Manager',
+    description: 'Led multiple software development teams, responsible for project planning, resource allocation, and client communication.'
+  )
+]
+
+education_records = [
+  EducationRecord.create!(college_or_university: 'XYZ University', course_name: 'BSc Computer Science', start_year: '2014', end_year: '2018', employee_id: 1, marks: 40),
+  EducationRecord.create!(college_or_university: 'XYZ University', course_name: 'MSc Computer Science', start_year: '2019', end_year: '2020', employee_id: 1, marks: 90)
+]
+
+
 
 # Seed data for EmployeeSkills
 EmployeeSkill.create!(
@@ -109,6 +140,7 @@ Task.create!(
   project_id: 2,
   employee_id: 2
 )
+
 
 # Generate Time Logs for Different Periods
 
